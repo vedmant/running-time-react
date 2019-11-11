@@ -4,6 +4,7 @@ import { Formik } from 'formik'
 import { TextField } from 'react-native-material-textfield'
 import { register } from '../../actions/auth'
 import Toast from 'react-native-root-toast'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default RegisterTab = ({ dispatch, navigation }) => {
   const initialErrors = { name: [], email: [], password: [], password_confirmation: [] }
@@ -27,7 +28,7 @@ export default RegisterTab = ({ dispatch, navigation }) => {
   }
 
   return (
-    <View style={styles.scene}>
+    <KeyboardAwareScrollView style={styles.scene} enableOnAndroid>
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <View>
@@ -70,7 +71,7 @@ export default RegisterTab = ({ dispatch, navigation }) => {
           </View>
         )}
       </Formik>
-    </View>
+    </KeyboardAwareScrollView>
   )
 }
 

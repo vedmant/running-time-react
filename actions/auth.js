@@ -30,7 +30,7 @@ export function login(form) {
 }
 
 export function logout() {
-  dispatch({ type: 'LOGOUT_OK' })
+  return { type: 'LOGOUT_OK' }
 }
 
 export function register(form) {
