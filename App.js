@@ -7,6 +7,7 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import configureStore from './store/configureStore'
 import AppNavigator from './navigation/AppNavigator'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false)
@@ -29,6 +30,11 @@ export default function App(props) {
       <Provider store={store}>
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <Spinner
+            visible={store.getState().general.loading}
+            textContent={'Loading...'}
+            textStyle={styles.spinnerTextStyle}
+          />
           <AppNavigator />
         </View>
       </Provider>
@@ -67,4 +73,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-});
+  spinnerTextStyle: {
+    color: '#FFF'
+  },
+})

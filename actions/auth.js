@@ -14,24 +14,17 @@ export function checkLogin() {
   }
 }
 
-export function login({ commit, dispatch }, form) {
-  commit('LOGIN')
-
-  return new Promise((resolve, reject) => {
-    axios.post(Config.apiPath + 'auth/login', form)
-      .then(
-        response => {
-          const accessToken = response.data.access_token
-          localStorage.setItem('access_token', accessToken)
-
-          commit('LOGIN_OK', { user: response.data.user, accessToken })
-          resolve()
-        })
-      .catch(error => {
-        commit('LOGIN_FAIL')
-        reject(error.response.data)
-      })
-  })
+export function login(form) {
+  return async dispatch => {
+    dispatch({ type: 'LOGIN' })
+    try {
+      const res = await axios.post(config.apiPath + 'auth/login', form)
+      dispatch({ type: 'LOGIN_OK', data: res.data })
+    } catch (e) {
+      dispatch({ type: 'LOGIN_FAIL', error: e })
+      throw e
+    }
+  }
 }
 
 export function logout({ commit }) {
