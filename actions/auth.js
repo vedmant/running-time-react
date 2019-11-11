@@ -4,6 +4,8 @@ import * as config from '../config'
 export function checkLogin() {
   return async dispatch => {
     dispatch({ type: 'CHECK_LOGIN' })
+
+    await new Promise((resolve) => setTimeout(resolve, 1000))
     try {
       const res = await axios.get(config.apiPath + 'user/me')
       dispatch({ type: 'CHECK_LOGIN_OK', data: res.data })
@@ -27,45 +29,32 @@ export function login(form) {
   }
 }
 
-export function logout({ commit }) {
-  commit('LOGOUT_OK')
-
-  localStorage.removeItem('access_token')
+export function logout() {
+  dispatch({ type: 'LOGOUT_OK' })
 }
 
-export function register({ commit, dispatch }, form) {
-  commit('REGISTER')
-
-  return new Promise((resolve, reject) => {
-    axios.post(Config.apiPath + 'auth/register', form)
-      .then(
-        response => {
-          const accessToken = response.data.access_token
-          localStorage.setItem('access_token', accessToken)
-
-          commit('REGISTER_OK', { user: response.data.user, accessToken })
-          resolve()
-        })
-      .catch(error => {
-        commit('REGISTER_FAIL')
-        reject(error.response.data)
-      })
-  })
+export function register(form) {
+  return async dispatch => {
+    dispatch({ type: 'REGISTER' })
+    try {
+      const res = await axios.post(config.apiPath + 'auth/register', form)
+      dispatch({ type: 'REGISTER_OK', data: res.data })
+    } catch (e) {
+      dispatch({ type: 'REGISTER_FAIL', error: e })
+      throw e
+    }
+  }
 }
 
-export function updateProfile({ commit, dispatch }, { id, form }) {
-  commit('UPDATE_PROFILE')
-
-  return new Promise((resolve, reject) => {
-    axios.post(Config.apiPath + 'user/' + id, { _method: 'PUT', ...form })
-      .then(
-        response => {
-          commit('UPDATE_PROFILE_OK', response.data.user)
-          resolve()
-        })
-      .catch(error => {
-        commit('UPDATE_PROFILE_FAIL')
-        reject(error.response.data)
-      })
-  })
+export function updateProfile({ id, form }) {
+  return async dispatch => {
+    dispatch({ type: 'UPDATE_PROFILE' })
+    try {
+      const res = await axios.post(`${config.apiPath}user/${id}`, form)
+      dispatch({ type: 'UPDATE_PROFILE_OK', data: res.data })
+    } catch (e) {
+      dispatch({ type: 'UPDATE_PROFILE_FAIL', error: e })
+      throw e
+    }
+  }
 }

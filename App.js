@@ -8,6 +8,28 @@ import { Ionicons } from '@expo/vector-icons'
 import configureStore from './store/configureStore'
 import AppNavigator from './navigation/AppNavigator'
 import Spinner from 'react-native-loading-spinner-overlay'
+import { connect } from 'react-redux'
+
+const rootStateToProps = state => ({
+  loading: state.general.loading
+})
+
+const RootScreen = connect(rootStateToProps)(({ loading }) => {
+  return (
+    <View style={styles.container}>
+      {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+      <Spinner
+        visible={loading}
+        textContent={'Loading...'}
+        textStyle={styles.spinnerTextStyle}
+        cancelable={true}
+        animation="fade"
+        overlayColor="rgba(0, 0, 0, 0.8)"
+      />
+      <AppNavigator />
+    </View>
+  )
+})
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false)
@@ -28,15 +50,7 @@ export default function App(props) {
   } else {
     return (
       <Provider store={store}>
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <Spinner
-            visible={store.getState().general.loading}
-            textContent={'Loading...'}
-            textStyle={styles.spinnerTextStyle}
-          />
-          <AppNavigator />
-        </View>
+        <RootScreen />
       </Provider>
     )
   }
@@ -61,11 +75,11 @@ async function loadResourcesAsync() {
 function handleLoadingError(error) {
   // In this case, you might want to report the error to your error reporting
   // service, for example Sentry
-  console.warn(error);
+  console.warn(error)
 }
 
 function handleFinishLoading(setLoadingComplete) {
-  setLoadingComplete(true);
+  setLoadingComplete(true)
 }
 
 const styles = StyleSheet.create({
@@ -74,6 +88,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   spinnerTextStyle: {
-    color: '#FFF'
+    color: '#fff',
   },
 })

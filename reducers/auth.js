@@ -46,7 +46,7 @@ const authReducer = function (state = initialState, action) {
 
     case 'UPDATE_PROFILE_OK':
       return Immutable.merge(state, {
-        me: action.user,
+        me: action.data.user,
       })
 
     default:
