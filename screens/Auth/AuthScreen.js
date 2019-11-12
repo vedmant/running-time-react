@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, Dimensions } from 'react-native'
-import { TabView, SceneMap } from 'react-native-tab-view'
+import { TabView, TabBar, SceneMap } from 'react-native-tab-view'
 import { connect } from 'react-redux'
 import LoginTab from './LoginTab'
 import RegisterTab from './RegisterTab'
@@ -23,10 +23,14 @@ class AuthScreen extends React.Component {
       <View style={styles.container}>
         <TabView
           navigationState={this.state}
-          renderScene={SceneMap({
-            login: () => <LoginTab {...this.props} />,
-            register: () => <RegisterTab {...this.props} />,
-          })}
+          renderTabBar={props => <TabBar {...props} style={{ backgroundColor: '#666' }} />}
+          renderScene={({ route }) => {
+            switch (route.key) {
+              case 'login': return <LoginTab {...this.props} />
+              case 'register': return <RegisterTab {...this.props} />
+              default: return null;
+            }
+          }}
           onIndexChange={index => this.setState({ index })}
           initialLayout={{ width: Dimensions.get('window').width }}
         />
@@ -35,12 +39,14 @@ class AuthScreen extends React.Component {
   }
 }
 
-export default connect()(AuthScreen)
+export default connect(state => ({
+  // loading: state.general.loading,
+}))(AuthScreen)
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     // paddingTop: StatusBar.currentHeight,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f8fa',
   },
 })

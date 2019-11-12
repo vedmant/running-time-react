@@ -6,15 +6,17 @@ import Panel from '../components/Panel'
 import { LineChart } from 'react-native-chart-kit'
 
 function HomeScreen({ dispatch, dashboard, loading }) {
+  const dashboardLoaded = Object.keys(dashboard).length !== 0
+
   useEffect(() => {
-    dispatch(loadDashboard())
+    if (!dashboardLoaded) dispatch(loadDashboard())
   }, [])
 
   const onRefresh = React.useCallback(() => {
     dispatch(loadDashboard())
   })
 
-  return (
+  return (dashboardLoaded &&
     <ScrollView contentContainerStyle={styles.container}
       refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={loading} />}>
       <Panel header="This week">

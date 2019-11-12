@@ -24,7 +24,7 @@ const authReducer = function (state = initialState, action) {
       })
 
     case 'LOGIN_OK':
-      setToken(action.accessToken)
+      setToken(action.data.access_token)
       return Immutable.merge(state, {
         me: action.data.user,
         accessToken: action.data.access_token,
@@ -38,7 +38,7 @@ const authReducer = function (state = initialState, action) {
       })
 
     case 'REGISTER_OK':
-      setToken(action.accessToken)
+      setToken(action.data.access_token)
       return Immutable.merge(state, {
         me: action.data.user,
         accessToken: action.data.access_token,

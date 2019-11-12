@@ -21,6 +21,9 @@ const entriesReducer = function (state = initialState, action) {
         entry: action.data.entry,
       })
 
+    case 'LOGOUT_OK':
+      return initialState
+
     default:
       return state;
   }

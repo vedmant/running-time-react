@@ -55,6 +55,11 @@ const generalReducer = function (state = initialState, action) {
         loading: false,
       })
 
+    case 'LOGOUT_OK':
+      return Immutable.merge(state, {
+        dashboard: {},
+      })
+
     default:
       return state;
   }

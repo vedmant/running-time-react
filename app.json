@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Running Time",
-    "slug": "RunningTime",
+    "slug": "running-time",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [
@@ -15,7 +15,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#f5f8fa"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -25,6 +25,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": ""
   }
 }

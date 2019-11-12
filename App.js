@@ -15,11 +15,15 @@ const rootStateToProps = state => ({
 })
 
 const RootScreen = connect(rootStateToProps)(({ loading }) => {
+  const [showSpinner, setShowSpinner] = useState(false)
+  if (loading && !showSpinner) setTimeout(() => setShowSpinner(true), 400)
+  else if (!loading && showSpinner) setShowSpinner(false)
+
   return (
     <View style={styles.container}>
       {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
       <Spinner
-        visible={loading}
+        visible={showSpinner}
         textContent={'Loading...'}
         textStyle={styles.spinnerTextStyle}
         cancelable={true}
@@ -85,7 +89,7 @@ function handleFinishLoading(setLoadingComplete) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f8fa',
   },
   spinnerTextStyle: {
     color: '#fff',

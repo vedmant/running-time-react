@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
-import { View, Button, StyleSheet } from 'react-native'
+import { View, StyleSheet, Button } from 'react-native'
 import { Formik } from 'formik'
 import { TextField } from 'react-native-material-textfield'
 import { login } from '../../actions/auth'
 import Toast from 'react-native-root-toast'
+import Panel from '../../components/Panel'
 
-export default LoginTab = ({ dispatch, navigation }) => {
-  const initialErrors = { email: [], password: [] }
-  const initialValues = { email: 'user@gmail.com', password: '123456' }
+const initialErrors = { email: [], password: [] }
+const initialValues = { email: 'user@gmail.com', password: '123456' }
 
+export default LoginTab = ({ dispatch, navigation, loading }) => {
   const [errors, setErrors] = useState(initialErrors)
 
   const onSubmit = async values => {
@@ -28,31 +29,33 @@ export default LoginTab = ({ dispatch, navigation }) => {
 
   return (
     <View style={styles.scene}>
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
-          <View>
-            <TextField
-              label='Email'
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
-              value={values.email}
-              autoCompleteType="email"
-              error={errors.email[0]}
-            />
-            <TextField
-              label='Password'
-              onChangeText={handleChange('password')}
-              onBlur={handleBlur('password')}
-              value={values.password}
-              error={errors.password[0]}
-              autoCompleteType='password'
-              secureTextEntry={true}
-            />
-            <View style={{ paddingTop: 20 }} />
-            <Button onPress={handleSubmit} title="Login" />
-          </View>
-        )}
-      </Formik>
+      <Panel>
+        <Formik initialValues={initialValues} onSubmit={onSubmit}>
+          {({ handleChange, handleBlur, handleSubmit, values }) => (
+            <View>
+              <TextField
+                label='Email'
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.email}
+                autoCompleteType="email"
+                error={errors.email[0]}
+              />
+              <TextField
+                label='Password'
+                onChangeText={handleChange('password')}
+                onBlur={handleBlur('password')}
+                value={values.password}
+                error={errors.password[0]}
+                autoCompleteType='password'
+                secureTextEntry={true}
+              />
+              <View style={{ paddingTop: 20 }} />
+              <Button onPress={handleSubmit} title="Login" />
+            </View>
+          )}
+        </Formik>
+      </Panel>
     </View>
   )
 }
@@ -60,7 +63,6 @@ export default LoginTab = ({ dispatch, navigation }) => {
 const styles = StyleSheet.create({
   scene: {
     flex: 1,
-    paddingRight: 20,
-    paddingLeft: 20,
+    padding: 10,
   },
 })
