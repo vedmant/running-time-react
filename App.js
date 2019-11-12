@@ -9,21 +9,18 @@ import configureStore from './store/configureStore'
 import AppNavigator from './navigation/AppNavigator'
 import Spinner from 'react-native-loading-spinner-overlay'
 import { connect } from 'react-redux'
+import axios from 'axios'
 
 const rootStateToProps = state => ({
   loading: state.general.loading
 })
 
 const RootScreen = connect(rootStateToProps)(({ loading }) => {
-  const [showSpinner, setShowSpinner] = useState(false)
-  if (loading && !showSpinner) setTimeout(() => setShowSpinner(true), 400)
-  else if (!loading && showSpinner) setShowSpinner(false)
-
   return (
     <View style={styles.container}>
       {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
       <Spinner
-        visible={showSpinner}
+        visible={loading}
         textContent={'Loading...'}
         textStyle={styles.spinnerTextStyle}
         cancelable={true}
@@ -42,6 +39,8 @@ export default function App(props) {
   if (!store) {
     setStore(configureStore(() => setStoreReady(true)))
   }
+
+  if (storeReady) addAxiosToken(store)
 
   if (!isLoadingComplete && !storeReady && !props.skipLoadingScreen) {
     return (
@@ -84,6 +83,17 @@ function handleLoadingError(error) {
 
 function handleFinishLoading(setLoadingComplete) {
   setLoadingComplete(true)
+}
+
+function addAxiosToken(store) {
+  // Authorization header
+  axios.interceptors.request.use(function (config) {
+    config['headers'] = {
+      Authorization: 'Bearer ' + store.getState().auth.accessToken,
+      Accept: 'application/json',
+    }
+    return config
+  }, error => Promise.reject(error))
 }
 
 const styles = StyleSheet.create({
