@@ -2,15 +2,22 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { View, StyleSheet, Text } from 'react-native'
 import { checkLogin } from '../../actions/auth'
+import { setToken } from '../../reducers/auth'
 
 const stateToProps = state => ({
   me: state.auth.me,
+  accessToken: state.auth.accessToken,
 })
 
-export default connect(stateToProps)(({ dispatch, navigation, me }) => {
+export default connect(stateToProps)(({ dispatch, navigation, accessToken }) => {
   useEffect(() => {
+    if (accessToken) {
+      setToken(accessToken)
+      navigation.navigate('Main')
+      return
+    }
     dispatch(checkLogin())
-      .then(() => vigation.navigate('Main'))
+      .then(() => navigation.navigate('Main'))
       .catch(() => navigation.navigate('Auth'))
   }, [])
 

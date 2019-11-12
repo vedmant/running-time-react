@@ -54,7 +54,7 @@ const authReducer = function (state = initialState, action) {
   }
 }
 
-function setToken(token) {
+export function setToken(token) {
   // Authorization header
   axios.interceptors.request.use(function (config) {
     config['headers'] = {

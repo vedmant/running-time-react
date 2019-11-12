@@ -5,7 +5,7 @@ import thunk from 'redux-thunk'
 import { persistStore, persistReducer } from 'redux-persist'
 import reducer from '../reducers'
 
-AsyncStorage.clear()
+// AsyncStorage.clear()
 
 const persistConfig = {
   key: 'root',
