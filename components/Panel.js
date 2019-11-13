@@ -1,13 +1,13 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 
-export default function Panel({ header, children }) {
+export default function Panel({ header, children, bodyStyle = {} }) {
   return (
     <View style={styles.container}>
       {header && <View style={styles.header}>
         <Text>{header}</Text>
       </View>}
-      <View style={styles.body}>
+      <View style={[styles.body, bodyStyle]}>
         {children}
       </View>
     </View>
