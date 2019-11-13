@@ -4,7 +4,7 @@ import * as Font from 'expo-font'
 import React, { useState } from 'react'
 import { Provider } from 'react-redux'
 import { Platform, StatusBar, StyleSheet, View } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons'
 import configureStore from './store/configureStore'
 import AppNavigator from './navigation/AppNavigator'
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -19,14 +19,14 @@ const RootScreen = connect(rootStateToProps)(({ loading }) => {
   return (
     <View style={styles.container}>
       {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-      <Spinner
+      {/* <Spinner
         visible={loading}
         textContent={'Loading...'}
         textStyle={styles.spinnerTextStyle}
         cancelable={true}
         animation="fade"
         overlayColor="rgba(0, 0, 0, 0.8)"
-      />
+      /> */}
       <AppNavigator />
     </View>
   )
@@ -67,7 +67,8 @@ async function loadResourcesAsync() {
     ]),
     Font.loadAsync({
       // This is the font that we are using for our tab bar
-      ...Ionicons.font,
+      // ...Ionicons.font,
+      ...FontAwesome.font,
       // We include SpaceMono because we use it in HomeScreen.js. Feel free to
       // remove this if you are not using it in your app
       'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),

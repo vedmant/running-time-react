@@ -18,7 +18,7 @@ function DashboardScreen({ dispatch, dashboard, loading }) {
     dispatch(loadDashboard())
   })
 
-  return (dashboardLoaded &&
+  return (
     <KeyboardAwareScrollView enableOnAndroid contentContainerStyle={styles.container}
       refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={loading} />}>
       <Panel header="This week">
@@ -49,7 +49,7 @@ function DashboardScreen({ dispatch, dashboard, loading }) {
           <Text style={styles.value}>{dashboard.max_time}</Text>
         </Text>
       </Panel>
-      <Panel header="My Performance" bodyStyle={{ padding: 0 }}>
+      {dashboardLoaded && <Panel header="My Performance" bodyStyle={{ padding: 0 }}>
         <LineChart
           data={{
             labels: dashboard.week_chart.map(i => i[0]),
@@ -100,7 +100,7 @@ function DashboardScreen({ dispatch, dashboard, loading }) {
             </View>
           </View>
         </View>
-      </Panel>
+      </Panel>}
       <Panel header="Add new Time Record">
         <EntryForm />
       </Panel>
