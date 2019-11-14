@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet, Text, RefreshControl, View, Dimensions } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -7,15 +7,22 @@ import Panel from '../components/Panel'
 import EntryForm from './Entries/EntryForm'
 import { LineChart } from 'react-native-chart-kit'
 
-function DashboardScreen({ dispatch, dashboard, loading }) {
+function DashboardScreen({ dispatch, dashboard }) {
+  const [loading, setLoading] = useState(false)
   const dashboardLoaded = Object.keys(dashboard).length !== 0
 
+  const dispatchLoadDashboard = async () => {
+    setLoading(true)
+    await dispatch(loadDashboard())
+    setLoading(false)
+  }
+
   useEffect(() => {
-    if (!dashboardLoaded) dispatch(loadDashboard())
+    if (!dashboardLoaded) dispatchLoadDashboard()
   }, [])
 
-  const onRefresh = React.useCallback(() => {
-    dispatch(loadDashboard())
+  const onRefresh = useCallback(() => {
+    dispatchLoadDashboard()
   })
 
   return (
@@ -110,7 +117,6 @@ function DashboardScreen({ dispatch, dashboard, loading }) {
 
 DashboardScreen.navigationOptions = {
   title: 'Dashboard',
-  // header: null,
 }
 
 const styles = StyleSheet.create({

@@ -3,7 +3,7 @@ import { Platform } from 'react-native'
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
 import TabBarIcon from '../components/TabBarIcon'
 import DashboardScreen from '../screens/DashboardScreen'
-import EntriesScreen from '../screens/EntriesScreen'
+import EntriesScreen from '../screens/Entries/EntriesScreen'
 import SettingsScreen from '../screens/SettingsScreen'
 
 const config = Platform.select({

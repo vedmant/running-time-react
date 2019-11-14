@@ -1,25 +1,29 @@
 import React, { useState } from 'react'
-import { View, Button } from 'react-native'
+import { View } from 'react-native'
 import TextField from '../../components/TextField'
 import { storeEntry, loadEntries } from '../../actions/entries'
 import Toast from 'react-native-root-toast'
 import DateTimePicker from 'react-native-modal-datetime-picker'
 import dayjs from 'dayjs'
+import Button from '../../components/Button'
 
 const initialErrors = { date: [], distance: [], time: [] }
 const initialValues = { date: dayjs().format('MM/DD/YYYY'), distance: '', time: '' }
 
 export default EntryForm = ({ dispatch, onSuccess }) => {
-  const [form, setForm] = useState(initialValues)
+  const [form, setForm] = useState({ ...initialValues })
   const updateForm = data => setForm(Object.assign(form, data))
   const [errors, setErrors] = useState(initialErrors)
+  const [loading, setLoading] = useState(false)
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false)
 
   const onSubmit = async () => {
+    setLoading(true)
     try {
       await dispatch(storeEntry(form))
       setErrors(initialErrors)
+      setForm({ ...initialValues })
       Toast.show('Successfully added new record')
       dispatch(loadEntries())
       if (onSuccess) onSuccess()
@@ -31,6 +35,7 @@ export default EntryForm = ({ dispatch, onSuccess }) => {
       }
       Toast.show(e.response.data.message)
     }
+    setLoading(false)
   }
 
   return (
@@ -77,7 +82,9 @@ export default EntryForm = ({ dispatch, onSuccess }) => {
         onCancel={() => setTimePickerVisibility(false)}
       />
       <View style={{ paddingTop: 20 }} />
-      <Button onPress={onSubmit} title="Submit" />
+      <Button onPress={onSubmit} isLoading={loading}>
+        Submit
+      </Button>
     </View>
   )
 }

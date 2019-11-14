@@ -1,26 +1,21 @@
 import React from 'react'
-import { TouchableHighlight, StyleSheet, View } from 'react-native'
-import { FontAwesome } from '@expo/vector-icons'
+import { StyleSheet } from 'react-native'
+import Button from 'apsl-react-native-button'
 
-export default function Panel({ icon, children, onPress }) {
+export default function Panel({ children, ...props }) {
   return (
-    <TouchableHighlight style={styles.button} onPress={onPress}>
-      <View>
-        {icon && <FontAwesome name={icon} size={15} color="white" />}
-        {children}
-      </View>
-    </TouchableHighlight>
+    <Button style={styles.button} {...props} textStyle={styles.text}>
+      {children}
+    </Button>
   )
 }
 
 const styles = StyleSheet.create({
   button: {
-    width: 25,
-    height: 25,
+    borderColor: '#2a88bd',
     backgroundColor: '#3097d1',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 5,
-    marginRight: 5,
   },
+  text: {
+    color: 'white',
+  }
 })
