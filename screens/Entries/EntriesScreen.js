@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { loadEntries, deleteEntry } from '../../actions/entries'
 import Panel from '../../components/Panel'
 import SmallButton from '../../components/SmallButton'
+import Colors from '../../constants/Colors'
 
 class Entries extends Component {
   navigationOptions = {
@@ -65,7 +66,7 @@ class Entries extends Component {
 
   render() {
     return (
-      <FlatList data={this.props.entries.data} contentContainerStyle={styles.container}
+      <FlatList data={this.props.entries.data} style={{ backgroundColor: Colors.pageBackground }} contentContainerStyle={styles.container}
         renderItem={({ item }) => this.renderItem(item)}
         keyExtractor={item => item.id + ''}
         refreshControl={<RefreshControl onRefresh={() => this.dispatchWithLoading(loadEntries())} refreshing={this.state.loading} />}
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     paddingTop: 10,
-    backgroundColor: '#f5f8fa',
+    backgroundColor: Colors.pageBackground,
   },
   item: {},
   distance: {},

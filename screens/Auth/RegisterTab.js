@@ -6,6 +6,7 @@ import { register } from '../../actions/auth'
 import Toast from 'react-native-root-toast'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Panel from '../../components/Panel'
+import Colors from '../../constants/Colors'
 
 const initialErrors = { name: [], email: [], password: [], password_confirmation: [] }
 const initialValues = { name: 'Test', email: 'user@gmail.com', password: '123456', password_confirmation: '123456' }
@@ -82,5 +83,6 @@ const styles = StyleSheet.create({
   scene: {
     flex: 1,
     padding: 10,
+    backgroundColor: Colors.pageBackground,
   },
 })

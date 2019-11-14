@@ -10,6 +10,7 @@ import AppNavigator from './navigation/AppNavigator'
 import Spinner from 'react-native-loading-spinner-overlay'
 import { connect } from 'react-redux'
 import axios from 'axios'
+import Colors from './constants/Colors'
 
 const rootStateToProps = state => ({
   loading: state.general.loading
@@ -100,7 +101,7 @@ function addAxiosToken(store) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f8fa',
+    backgroundColor: Colors.pageBackground,
   },
   spinnerTextStyle: {
     color: '#fff',

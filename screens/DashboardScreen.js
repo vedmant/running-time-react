@@ -6,6 +6,7 @@ import { loadDashboard } from '../actions/general'
 import Panel from '../components/Panel'
 import EntryForm from './Entries/EntryForm'
 import { LineChart } from 'react-native-chart-kit'
+import Colors from '../constants/Colors'
 
 function DashboardScreen({ dispatch, dashboard }) {
   const [loading, setLoading] = useState(false)
@@ -26,7 +27,7 @@ function DashboardScreen({ dispatch, dashboard }) {
   })
 
   return (
-    <KeyboardAwareScrollView enableOnAndroid contentContainerStyle={styles.container}
+    <KeyboardAwareScrollView enableOnAndroid style={{ backgroundColor: Colors.pageBackground }} contentContainerStyle={styles.container}
       refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={loading} />}>
       <Panel header="This week">
         <Text>
@@ -121,7 +122,7 @@ DashboardScreen.navigationOptions = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f5f8fa',
+    backgroundColor: Colors.pageBackground,
     padding: 10,
   },
   value: {

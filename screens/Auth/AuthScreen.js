@@ -4,6 +4,7 @@ import { TabView, TabBar, SceneMap } from 'react-native-tab-view'
 import { connect } from 'react-redux'
 import LoginTab from './LoginTab'
 import RegisterTab from './RegisterTab'
+import Colors from '../../constants/Colors'
 
 class AuthScreen extends React.Component {
   static navigationOptions = {
@@ -47,6 +48,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // paddingTop: StatusBar.currentHeight,
-    backgroundColor: '#f5f8fa',
+    backgroundColor: Colors.pageBackground,
   },
 })
