@@ -5,8 +5,6 @@ import thunk from 'redux-thunk'
 import { persistStore, persistReducer } from 'redux-persist'
 import reducer from '../reducers'
 
-// AsyncStorage.clear()
-
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
@@ -21,8 +19,11 @@ export default function configureStore(onCompletion) {
     devTools({
       name: 'RunningTime',
       realtime: true,
+      hostname: 'localhost',
+      port: 8000,
+      suppressConnectErrors: false,
     })
-  );
+  )
 
   let store = createStore(persistedReducer, enhancer)
   let persistor = persistStore(store, null, onCompletion)

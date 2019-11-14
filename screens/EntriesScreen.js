@@ -40,7 +40,7 @@ function Entries({ dispatch, entries, loading }) {
   return (
     <FlatList data={entries.data} contentContainerStyle={styles.container}
       renderItem={({ item }) => <Item item={item} />}
-      keyExtractor={item => item.id}
+      keyExtractor={item => item.id + ''}
       refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={loading} />}
     />
   )

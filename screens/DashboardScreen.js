@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { ScrollView, StyleSheet, Text, RefreshControl, View, Dimensions } from 'react-native'
+import { StyleSheet, Text, RefreshControl, View, Dimensions } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { loadDashboard } from '../actions/general'
 import Panel from '../components/Panel'
@@ -28,11 +28,11 @@ function DashboardScreen({ dispatch, dashboard, loading }) {
         </Text>
         <Text>
           <Text>Average speed: </Text>
-          <Text style={styles.value}>{dashboard.weekly_avg_speed || 0} km/h</Text>
+          <Text style={styles.value}>{Math.round((dashboard.weekly_avg_speed || 0) * 10) / 10} km/h</Text>
         </Text>
         <Text>
           <Text>Average pace: </Text>
-          <Text style={styles.value}>{dashboard.weekly_avg_pace || 0} min/km</Text>
+          <Text style={styles.value}>{Math.round((dashboard.weekly_avg_pace || 0) * 10) / 10} min/km</Text>
         </Text>
       </Panel>
       <Panel header="Best results">
@@ -102,7 +102,7 @@ function DashboardScreen({ dispatch, dashboard, loading }) {
         </View>
       </Panel>}
       <Panel header="Add new Time Record">
-        <EntryForm />
+        <EntryForm dispatch={dispatch} />
       </Panel>
     </KeyboardAwareScrollView>
   )

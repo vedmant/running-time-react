@@ -1,28 +1,33 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Button, Text } from 'react-native'
-import { Formik } from 'formik'
-import { TextField } from 'react-native-material-textfield'
-import { login } from '../../actions/auth'
+import { View, Button } from 'react-native'
+import TextField from '../../components/TextField'
+import { storeEntry, loadEntries } from '../../actions/entries'
 import Toast from 'react-native-root-toast'
 import DateTimePicker from 'react-native-modal-datetime-picker'
 import dayjs from 'dayjs'
 
-const initialErrors = { date: [], distance: [], hours: [], minutes: [], seconds: [] }
-const initialValues = { date: dayjs().format('MM/DD/YYYY'), distance: '', hours: '', minutes: '', seconds: '' }
+const initialErrors = { date: [], distance: [], time: [] }
+const initialValues = { date: dayjs().format('MM/DD/YYYY'), distance: '', time: '' }
 
-export default LoginTab = ({ dispatch, navigation, loading }) => {
+export default EntryForm = ({ dispatch, onSuccess }) => {
+  const [form, setForm] = useState(initialValues)
+  const updateForm = data => setForm(Object.assign(form, data))
   const [errors, setErrors] = useState(initialErrors)
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false)
 
-  const onSubmit = async values => {
+  const onSubmit = async () => {
     try {
-      await dispatch(login(values))
+      await dispatch(storeEntry(form))
+      setErrors(initialErrors)
       Toast.show('Successfully added new record')
+      dispatch(loadEntries())
+      if (onSuccess) onSuccess()
     } catch (e) {
       if (e.response && e.response.data && e.response.data.errors) {
         setErrors({ ...initialErrors, ...e.response.data.errors })
       } else {
-        setErrors({ ...initialErrors, email: [e.response.data.message] })
+        setErrors({ ...initialErrors, date: [e.response.data.message] })
       }
       Toast.show(e.response.data.message)
     }
@@ -30,83 +35,49 @@ export default LoginTab = ({ dispatch, navigation, loading }) => {
 
   return (
     <View>
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
-          <View>
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View style={{ flex: 1 }}>
-                <TextField
-                  label='Date'
-                  onChangeText={handleChange('date')}
-                  onBlur={handleBlur('date')}
-                  name='date'
-                  value={values.date}
-                  error={errors.date[0]}
-                  onFocus={() => setDatePickerVisibility(true)}
-                />
-              </View>
-              <View style={{ flex: 1 }}>
-                <TextField
-                  label='Distance'
-                  onChangeText={handleChange('distance')}
-                  onBlur={handleBlur('distance')}
-                  value={values.distance}
-                  error={errors.distance[0]}
-                  keyboardType='numeric'
-                />
-              </View>
-            </View>
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View style={{ flex: 1 }}>
-                <TextField
-                  label='Hours'
-                  onChangeText={handleChange('hours')}
-                  onBlur={handleBlur('hours')}
-                  value={values.hours}
-                  error={errors.hours[0]}
-                  keyboardType='numeric'
-                  maxLength={2}
-                />
-              </View>
-              <View style={{ flex: 1 }}>
-                <TextField
-                  label='Minutes'
-                  onChangeText={handleChange('minutes')}
-                  onBlur={handleBlur('minutes')}
-                  value={values.minutes}
-                  error={errors.minutes[0]}
-                  style={{ flex: 1 }}
-                  keyboardType='numeric'
-                  maxLength={2}
-                />
-              </View>
-              <View style={{ flex: 1 }}>
-                <TextField
-                  label='Seconds'
-                  onChangeText={handleChange('seconds')}
-                  onBlur={handleBlur('seconds')}
-                  value={values.seconds}
-                  error={errors.seconds[0]}
-                  style={{ flex: 1 }}
-                  keyboardType='numeric'
-                  maxLength={2}
-                />
-              </View>
-            </View>
-            <DateTimePicker
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={(date) => {
-                setFieldValue('date', dayjs(date).format('MM/DD/YYYY'))
-                setDatePickerVisibility(false)
-              }}
-              onCancel={() => setDatePickerVisibility(false)}
-            />
-            <View style={{ paddingTop: 20 }} />
-            <Button onPress={handleSubmit} title="Submit" />
-          </View>
-        )}
-      </Formik>
+      <TextField
+        label='Date'
+        onChangeText={val => updateForm({ date: val })}
+        value={form.date}
+        error={errors.date[0]}
+        onFocus={() => setDatePickerVisibility(true)}
+      />
+      <TextField
+        label='Distance'
+        onChangeText={val => updateForm({ distance: val })}
+        value={form.distance}
+        error={errors.distance[0]}
+        keyboardType='numeric'
+      />
+      <TextField
+        label='Time'
+        onChangeText={val => updateForm({ time: val })}
+        value={form.time}
+        error={errors.time[0]}
+        onFocus={() => setTimePickerVisibility(true)}
+      />
+      <DateTimePicker
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={(date) => {
+          console.log(dayjs(date).format('MM/DD/YYYY'))
+          updateForm({ date: dayjs(date).format('MM/DD/YYYY') })
+          setDatePickerVisibility(false)
+        }}
+        onCancel={() => setDatePickerVisibility(false)}
+      />
+      <DateTimePicker
+        isVisible={isTimePickerVisible}
+        mode="time"
+        onConfirm={(date) => {
+          console.log(date)
+          updateForm({ time: dayjs(date).format('HH:mm:ss') })
+          setTimePickerVisibility(false)
+        }}
+        onCancel={() => setTimePickerVisibility(false)}
+      />
+      <View style={{ paddingTop: 20 }} />
+      <Button onPress={onSubmit} title="Submit" />
     </View>
   )
 }
