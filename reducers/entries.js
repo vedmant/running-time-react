@@ -11,9 +11,18 @@ const initialState = Immutable({
 const entriesReducer = function (state = initialState, action) {
   switch (action.type) {
 
+    case 'LOAD_MORE_ENTRIES_OK':
+      const { data, ...rest } = action.data.entries
+      return Immutable.merge(state, {
+        entries: {
+          data: state.entries.data.concat(data),
+          ...rest,
+        },
+      })
+
     case 'LOAD_ENTRIES_OK':
       return Immutable.merge(state, {
-        entries: action.data.entries,
+        entries: action.data.entries
       })
 
     case 'LOAD_ENTRY_OK':

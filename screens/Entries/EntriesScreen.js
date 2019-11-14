@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
 import React, { Component } from 'react'
-import { FlatList, StyleSheet, Text, View, RefreshControl, Alert } from 'react-native'
+import { Alert, FlatList, RefreshControl, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
-import { loadEntries, deleteEntry } from '../../actions/entries'
+import { deleteEntry, loadEntries, loadMoreEntries } from '../../actions/entries'
 import Panel from '../../components/Panel'
 import SmallButton from '../../components/SmallButton'
 import Colors from '../../constants/Colors'
@@ -13,7 +13,8 @@ class Entries extends Component {
   }
 
   state = {
-    loading: false
+    loading: false,
+    loadingMore: false,
   }
 
   componentDidMount() {
@@ -24,6 +25,14 @@ class Entries extends Component {
     this.setState({ loading: true })
     await this.props.dispatch(action)
     this.setState({ loading: false })
+  }
+
+  async loadMore() {
+    if (!this.state.loadingMore && this.props.entries.current_page < this.props.entries.last_page) {
+      this.setState({ loadingMore: true })
+      await this.props.dispatch(loadMoreEntries({ page: this.props.entries.current_page + 1 }))
+      this.setState({ loadingMore: false })
+    }
   }
 
   async onDeleteItem(item) {
@@ -64,12 +73,32 @@ class Entries extends Component {
     )
   }
 
+  renderFooter = () => {
+    if (!this.state.loadingMore) return null
+
+    return (
+      <View
+        style={{
+          flex: 1,
+          paddingVertical: 10,
+          marginTop: 10,
+          marginBottom: 10,
+        }}
+      >
+        <ActivityIndicator animating size="large" />
+      </View>
+    )
+  }
+
   render() {
     return (
       <FlatList data={this.props.entries.data} style={{ backgroundColor: Colors.pageBackground }} contentContainerStyle={styles.container}
         renderItem={({ item }) => this.renderItem(item)}
         keyExtractor={item => item.id + ''}
         refreshControl={<RefreshControl onRefresh={() => this.dispatchWithLoading(loadEntries())} refreshing={this.state.loading} />}
+        onEndReached={() => this.loadMore()}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={this.renderFooter}
       />
     )
   }

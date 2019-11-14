@@ -7,7 +7,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --watchAll",
-    "serv": "adb reverse tcp:8000 tcp:8000 && remotedev --hostname=localhost --port=8000"
+    "serv": "adb reverse tcp:8000 tcp:8000; remotedev --hostname=localhost --port=8000"
   },
   "jest": {
     "preset": "jest-expo"

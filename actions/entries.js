@@ -15,6 +15,20 @@ export function loadEntries(params) {
   }
 }
 
+export function loadMoreEntries(params) {
+  return async dispatch => {
+    dispatch({ type: 'LOAD_MORE_ENTRIES' })
+
+    try {
+      const res = await axios.get(config.apiPath + 'entry', { params })
+      dispatch({ type: 'LOAD_MORE_ENTRIES_OK', data: res.data })
+    } catch (e) {
+      dispatch({ type: 'LOAD_MORE_ENTRIES_FAIL', error: e })
+      throw e
+    }
+  }
+}
+
 export function loadEntry(id) {
   return async dispatch => {
     dispatch({ type: 'LOAD_ENTRY' })
