@@ -50,14 +50,14 @@ function DashboardScreen({ dispatch, dashboard }) {
         </Text>
         <Text>
           <Text>Longest distance: </Text>
-          <Text style={styles.value}>{dashboard.max_distance} km</Text>
+          <Text style={styles.value}>{dashboard.max_distance || 0} km</Text>
         </Text>
         <Text>
           <Text>Longest run: </Text>
-          <Text style={styles.value}>{dashboard.max_time}</Text>
+          <Text style={styles.value}>{dashboard.max_time || 0}</Text>
         </Text>
       </Panel>
-      {dashboardLoaded && <Panel header="My Performance" bodyStyle={{ padding: 0 }}>
+      {(dashboardLoaded && dashboard.week_chart.length) ? <Panel header="My Performance" bodyStyle={{ padding: 0 }}>
         <LineChart
           data={{
             labels: dashboard.week_chart.map(i => i[0]),
@@ -108,7 +108,7 @@ function DashboardScreen({ dispatch, dashboard }) {
             </View>
           </View>
         </View>
-      </Panel>}
+      </Panel> : null}
       <Panel header="Add new Time Record">
         <EntryForm dispatch={dispatch} />
       </Panel>

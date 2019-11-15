@@ -1,20 +1,25 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Button } from 'react-native'
-import { Formik } from 'formik'
+import { StyleSheet, View } from 'react-native'
 import { TextField } from 'react-native-material-textfield'
-import { login } from '../../actions/auth'
 import Toast from 'react-native-root-toast'
+import { login } from '../../actions/auth'
+import Button from '../../components/Button'
 import Panel from '../../components/Panel'
 
 const initialErrors = { email: [], password: [] }
 const initialValues = { email: 'user@gmail.com', password: '123456' }
 
-export default LoginTab = ({ dispatch, navigation, loading }) => {
+export default LoginTab = ({ dispatch, navigation }) => {
+  const [loading, setLoading] = useState(false)
+  const [form, setForm] = useState({ ...initialValues })
   const [errors, setErrors] = useState(initialErrors)
 
-  const onSubmit = async values => {
+  const updateForm = data => setForm(Object.assign(form, data))
+
+  const onSubmit = async () => {
+    setLoading(true)
     try {
-      await dispatch(login(values))
+      await dispatch(login(form))
       Toast.show('Successfully logged in')
       navigation.navigate('Main')
     } catch (e) {
@@ -24,37 +29,30 @@ export default LoginTab = ({ dispatch, navigation, loading }) => {
         setErrors({ ...initialErrors, email: [e.response.data.message] })
       }
       Toast.show(e.response.data.message)
+      setLoading(false)
     }
   }
 
   return (
     <View style={styles.scene}>
       <Panel>
-        <Formik initialValues={initialValues} onSubmit={onSubmit}>
-          {({ handleChange, handleBlur, handleSubmit, values }) => (
-            <View>
-              <TextField
-                label='Email'
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                autoCompleteType="email"
-                error={errors.email[0]}
-              />
-              <TextField
-                label='Password'
-                onChangeText={handleChange('password')}
-                onBlur={handleBlur('password')}
-                value={values.password}
-                error={errors.password[0]}
-                autoCompleteType='password'
-                secureTextEntry={true}
-              />
-              <View style={{ paddingTop: 20 }} />
-              <Button onPress={handleSubmit} title="Login" />
-            </View>
-          )}
-        </Formik>
+        <TextField
+          label='Email'
+          onChangeText={val => updateForm({ email: val })}
+          value={form.email}
+          error={errors.email[0]}
+          autoCompleteType="email"
+        />
+        <TextField
+          label='Password'
+          onChangeText={val => updateForm({ password: val })}
+          value={form.password}
+          error={errors.password[0]}
+          autoCompleteType='password'
+          secureTextEntry={true}
+        />
+        <View style={{ paddingTop: 20 }} />
+        <Button onPress={onSubmit} isLoading={loading}>Login</Button>
       </Panel>
     </View>
   )

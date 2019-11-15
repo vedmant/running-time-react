@@ -8,7 +8,7 @@ import SmallButton from '../../components/SmallButton'
 import Colors from '../../constants/Colors'
 
 class Entries extends Component {
-  navigationOptions = {
+  static navigationOptions = {
     title: 'Entries',
   }
 
@@ -64,7 +64,7 @@ class Entries extends Component {
             <Text style={styles.distance}>Avg. Speed: {Math.round(item.speed * 10) / 10}</Text>
             <Text style={styles.distance}>Avg. Pace: {Math.round(item.pace * 10) / 10}</Text>
             <View style={{ flex: 1, alignItems: 'flex-start', flexDirection: 'row' }}>
-              <SmallButton icon="pencil" onPress={() => console.log('press')} style={{ marginRight: 5 }} />
+              <SmallButton icon="pencil" onPress={() => this.props.navigation.navigate('EditEntry', { item })} style={{ marginRight: 5 }} />
               <SmallButton icon="trash" onPress={() => this.onDeleteItem(item)} type="danger" />
             </View>
           </View>
@@ -83,8 +83,7 @@ class Entries extends Component {
           paddingVertical: 10,
           marginTop: 10,
           marginBottom: 10,
-        }}
-      >
+        }}>
         <ActivityIndicator animating size="large" />
       </View>
     )
@@ -99,6 +98,9 @@ class Entries extends Component {
         onEndReached={() => this.loadMore()}
         onEndReachedThreshold={0.5}
         ListFooterComponent={this.renderFooter}
+        ListEmptyComponent={<View style={{ alignItems: 'center' }}>
+          <Text>The list is empty</Text>
+        </View>}
       />
     )
   }
