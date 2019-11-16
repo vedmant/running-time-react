@@ -24,8 +24,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.vedmant.runningtime"
     },
-    "description": "**React Native Sample Project** is a tutorial React Native Mobile Application that uses [Running Time](https://github.com/vedmant/running-time) API backend"
+    "android": {
+      "package": "com.vedmant.runningtime",
+      "permissions" : []
+    },
+    "description": "**React Native Sample Project** is a tutorial React Native Mobile Application that uses [Running Time](https://github.com/vedmant/running-time) API backend",
+    "githubUrl": "https://github.com/vedmant/running-time-react"
   }
 }
