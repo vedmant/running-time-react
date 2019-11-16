@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, ActivityIndicator } from 'react-native'
 import { checkLogin } from '../../actions/auth'
+import Colors from '../../constants/Colors'
 
 const stateToProps = state => ({
   me: state.auth.me,
@@ -17,6 +18,7 @@ export default connect(stateToProps)(({ dispatch, navigation, accessToken }) => 
 
   return (
     <View style={styles.container}>
+      <ActivityIndicator animating size="large" />
     </View>
   )
 })
@@ -24,8 +26,7 @@ export default connect(stateToProps)(({ dispatch, navigation, accessToken }) => 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#000',
+    backgroundColor: Colors.pageBackground,
     alignItems: 'center',
     justifyContent: 'center',
   },
