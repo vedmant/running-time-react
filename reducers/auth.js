@@ -11,7 +11,7 @@ const authReducer = function (state = initialState, action) {
 
     case 'CHECK_LOGIN_OK':
       return Immutable.merge(state, {
-        me: action.user,
+        me: action.data,
         authChecked: true
       })
 

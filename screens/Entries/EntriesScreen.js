@@ -6,6 +6,7 @@ import { deleteEntry, loadEntries, loadMoreEntries } from '../../actions/entries
 import Panel from '../../components/Panel'
 import SmallButton from '../../components/SmallButton'
 import Colors from '../../constants/Colors'
+import ActionButton from 'react-native-action-button'
 
 class Entries extends Component {
   static navigationOptions = {
@@ -91,17 +92,23 @@ class Entries extends Component {
 
   render() {
     return (
-      <FlatList data={this.props.entries.data} style={{ backgroundColor: Colors.pageBackground }} contentContainerStyle={styles.container}
-        renderItem={({ item }) => this.renderItem(item)}
-        keyExtractor={item => item.id + ''}
-        refreshControl={<RefreshControl onRefresh={() => this.dispatchWithLoading(loadEntries())} refreshing={this.state.loading} />}
-        onEndReached={() => this.loadMore()}
-        onEndReachedThreshold={0.5}
-        ListFooterComponent={this.renderFooter}
-        ListEmptyComponent={<View style={{ alignItems: 'center' }}>
-          <Text>The list is empty</Text>
-        </View>}
-      />
+      <View style={{ flex: 1 }}>
+        <FlatList data={this.props.entries.data} style={{ backgroundColor: Colors.pageBackground }} contentContainerStyle={styles.container}
+          renderItem={({ item }) => this.renderItem(item)}
+          keyExtractor={item => item.id + ''}
+          refreshControl={<RefreshControl onRefresh={() => this.dispatchWithLoading(loadEntries())} refreshing={this.state.loading} />}
+          onEndReached={() => this.loadMore()}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={this.renderFooter}
+          ListEmptyComponent={this.state.loading ? null : <View style={{ alignItems: 'center' }}>
+            <Text>The list is empty</Text>
+          </View>}
+        />
+        <ActionButton
+          buttonColor={Colors.primary}
+          onPress={() => this.props.navigation.navigate('AddEntry')}
+        />
+      </View>
     )
   }
 }

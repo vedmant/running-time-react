@@ -2,10 +2,11 @@ import React from 'react'
 import { Platform } from 'react-native'
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
 import TabBarIcon from '../components/TabBarIcon'
-import DashboardScreen from '../screens/DashboardScreen'
+import DashboardScreen from '../screens/Dashboard/DashboardScreen'
 import EntriesScreen from '../screens/Entries/EntriesScreen'
 import EditEntryScreen from '../screens/Entries/EditEntryScreen'
-import SettingsScreen from '../screens/SettingsScreen'
+import AddEntryScreen from '../screens/Entries/AddEntryScreen'
+import ProfileScreen from '../screens/Profile/ProfileScreen'
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -28,6 +29,7 @@ const EntriesStack = createStackNavigator(
   {
     Entries: EntriesScreen,
     EditEntry: EditEntryScreen,
+    AddEntry: AddEntryScreen,
   },
   config,
 )
@@ -39,7 +41,7 @@ EntriesStack.path = ''
 
 const ProfileStack = createStackNavigator(
   {
-    Settings: SettingsScreen,
+    Settings: ProfileScreen,
   },
   config
 )

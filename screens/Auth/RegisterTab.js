@@ -62,14 +62,14 @@ export default RegisterTab = ({ dispatch, navigation }) => {
         />
         <TextField
           label='Password confirmation'
-          onChangeText={val => updateForm({ name: password_confirmation })}
+          onChangeText={val => updateForm({ password_confirmation: val })}
           value={form.password_confirmation}
           error={errors.password_confirmation[0]}
           autoCompleteType='password'
           secureTextEntry={true}
         />
         <View style={{ paddingTop: 20 }} />
-        <Button onPress={onSubmit} isLoading={loading}>Login</Button>
+        <Button onPress={onSubmit} isLoading={loading}>Register</Button>
       </Panel>
     </KeyboardAwareScrollView>
   )

@@ -50,7 +50,7 @@ export function updateProfile({ id, form }) {
   return async dispatch => {
     dispatch({ type: 'UPDATE_PROFILE' })
     try {
-      const res = await axios.post(`${config.apiPath}user/${id}`, form)
+      const res = await axios.post(`${config.apiPath}user/${id}`, { _method: 'PUT', ...form })
       dispatch({ type: 'UPDATE_PROFILE_OK', data: res.data })
     } catch (e) {
       dispatch({ type: 'UPDATE_PROFILE_FAIL', error: e })
