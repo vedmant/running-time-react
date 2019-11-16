@@ -1,8 +1,7 @@
-import React from 'react'
-import { createAppContainer, createSwitchNavigator, createStackNavigator } from 'react-navigation'
-import MainTabNavigator from './MainTabNavigator'
-import AuthScreen from '../screens/Auth/AuthScreen'
+import { createAppContainer, createStackNavigator, createSwitchNavigator } from 'react-navigation'
 import AuthLoadingScreen from '../screens/Auth/AuthLoadingScreen'
+import AuthScreen from '../screens/Auth/AuthScreen'
+import MainTabNavigator from './MainTabNavigator'
 
 export default createAppContainer(
   createSwitchNavigator({
@@ -14,4 +13,4 @@ export default createAppContainer(
   }, {
     initialRouteName: 'AuthLoading',
   })
-);
+)

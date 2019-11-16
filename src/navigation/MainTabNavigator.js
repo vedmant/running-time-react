@@ -1,11 +1,11 @@
 import React from 'react'
 import { Platform } from 'react-native'
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 import TabBarIcon from '../components/TabBarIcon'
 import DashboardScreen from '../screens/Dashboard/DashboardScreen'
-import EntriesScreen from '../screens/Entries/EntriesScreen'
-import EditEntryScreen from '../screens/Entries/EditEntryScreen'
 import AddEntryScreen from '../screens/Entries/AddEntryScreen'
+import EditEntryScreen from '../screens/Entries/EditEntryScreen'
+import EntriesScreen from '../screens/Entries/EntriesScreen'
 import ProfileScreen from '../screens/Profile/ProfileScreen'
 
 const config = Platform.select({

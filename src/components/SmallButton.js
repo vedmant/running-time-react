@@ -1,6 +1,6 @@
-import React from 'react'
-import { TouchableHighlight, StyleSheet, View } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
+import React from 'react'
+import { StyleSheet, TouchableHighlight, View } from 'react-native'
 
 export default function Panel({ type = 'primary', icon, children, style, ...props }) {
   return (

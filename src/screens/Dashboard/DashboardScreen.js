@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import { connect } from 'react-redux'
-import { StyleSheet, Text, RefreshControl, View, Dimensions } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Dimensions, RefreshControl, StyleSheet, Text, View } from 'react-native'
+import { LineChart } from 'react-native-chart-kit'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { connect } from 'react-redux'
 import { loadDashboard } from '../../actions/general'
 import Panel from '../../components/Panel'
-import EntryForm from '../Entries/EntryForm'
-import { LineChart } from 'react-native-chart-kit'
 import Colors from '../../constants/Colors'
+import EntryForm from '../Entries/EntryForm'
 
 function DashboardScreen({ dispatch, dashboard }) {
   const [loading, setLoading] = useState(false)

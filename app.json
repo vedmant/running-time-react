@@ -6,9 +6,9 @@
     "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
+    "entryPoint": "index.js",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

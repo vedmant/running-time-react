@@ -1,16 +1,14 @@
+import { FontAwesome } from '@expo/vector-icons'
+import axios from 'axios'
 import { AppLoading } from 'expo'
 import { Asset } from 'expo-asset'
 import * as Font from 'expo-font'
 import React, { useState } from 'react'
-import { Provider } from 'react-redux'
 import { Platform, StatusBar, StyleSheet, View } from 'react-native'
-import { FontAwesome } from '@expo/vector-icons'
-import configureStore from './store/configureStore'
-import AppNavigator from './navigation/AppNavigator'
-import Spinner from 'react-native-loading-spinner-overlay'
-import { connect } from 'react-redux'
-import axios from 'axios'
+import { connect, Provider } from 'react-redux'
 import Colors from './constants/Colors'
+import AppNavigator from './navigation/AppNavigator'
+import configureStore from './store/configureStore'
 
 const rootStateToProps = state => ({
   loading: state.general.loading
@@ -20,14 +18,6 @@ const RootScreen = connect(rootStateToProps)(({ loading }) => {
   return (
     <View style={styles.container}>
       {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-      {/* <Spinner
-        visible={loading}
-        textContent={'Loading...'}
-        textStyle={styles.spinnerTextStyle}
-        cancelable={true}
-        animation="fade"
-        overlayColor="rgba(0, 0, 0, 0.8)"
-      /> */}
       <AppNavigator />
     </View>
   )
@@ -63,8 +53,8 @@ export default function App(props) {
 async function loadResourcesAsync() {
   await Promise.all([
     Asset.loadAsync([
-      require('./assets/images/robot-dev.png'),
-      require('./assets/images/robot-prod.png'),
+      require('../assets/images/robot-dev.png'),
+      require('../assets/images/robot-prod.png'),
     ]),
     Font.loadAsync({
       // This is the font that we are using for our tab bar
@@ -72,7 +62,7 @@ async function loadResourcesAsync() {
       ...FontAwesome.font,
       // We include SpaceMono because we use it in HomeScreen.js. Feel free to
       // remove this if you are not using it in your app
-      'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+      'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
     }),
   ]);
 }
@@ -102,8 +92,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.pageBackground,
-  },
-  spinnerTextStyle: {
-    color: '#fff',
-  },
+  }
 })

@@ -1,6 +1,6 @@
+import Button from 'apsl-react-native-button'
 import React from 'react'
 import { StyleSheet } from 'react-native'
-import Button from 'apsl-react-native-button'
 
 export default function Panel({ children, ...props }) {
   return (
