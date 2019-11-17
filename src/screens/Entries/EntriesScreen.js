@@ -1,12 +1,13 @@
 import dayjs from 'dayjs'
 import React, { Component } from 'react'
-import { Alert, FlatList, RefreshControl, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
+import { Alert, FlatList, RefreshControl, StyleSheet, Text, View, ActivityIndicator, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { deleteEntry, loadEntries, loadMoreEntries } from '../../actions/entries'
 import Panel from '../../components/Panel'
 import SmallButton from '../../components/SmallButton'
 import Colors from '../../constants/Colors'
-import ActionButton from 'react-native-action-button'
+import { FAB } from 'react-native-paper'
+import AwesomeIcon from 'react-native-vector-icons/FontAwesome'
 
 class Entries extends Component {
   static navigationOptions = {
@@ -104,8 +105,9 @@ class Entries extends Component {
             <Text>The list is empty</Text>
           </View>}
         />
-        <ActionButton
-          buttonColor={Colors.primary}
+        <FAB
+          style={styles.addButton}
+          icon="plus"
           onPress={() => this.props.navigation.navigate('AddEntry')}
         />
       </View>
@@ -119,6 +121,18 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingTop: 10,
     backgroundColor: Colors.pageBackground,
+  },
+  addButton: {
+    backgroundColor: Colors.primary,
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+  },
+  addButtonText: {
+    color: 'white',
+    fontSize: 25,
+    paddingBottom: 3,
   },
   item: {},
   distance: {},

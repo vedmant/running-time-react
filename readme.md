@@ -4,13 +4,10 @@
 
 **React Native Sample Project** is a tutorial React Native Mobile Application that uses [Running Time](https://github.com/vedmant/running-time) API backend
 
-[Demo on Expo](https://expo.io/@vedmant/running-time)
-
 Demo login: `user@gmail.com` and password: `123456`
 
 ### Main features ###
 
-* Based on Expo
 * Simple and clean code
 * Redux with redux-thunk
 * Auth flow: login and registration
@@ -36,7 +33,6 @@ It will open Expo tab in your browser where you can select to run it on Android 
 
 ### TODO ###
 
-- Migrate from Expo to bare React Native
 - Replace timepicker with better solution
 - Add Eslinter
 - Better login / register screens design

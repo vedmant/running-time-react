@@ -5,6 +5,8 @@ import { Provider } from 'react-redux'
 import Colors from './constants/Colors'
 import AppNavigator from './navigation/AppNavigator'
 import configureStore from './store/configureStore'
+import { Provider as PaperProvider } from 'react-native-paper'
+import AwesomeIcon from 'react-native-vector-icons/FontAwesome'
 
 export default function App(props) {
   const [store, setStore] = useState(null)
@@ -22,10 +24,15 @@ export default function App(props) {
   } else {
     return (
       <Provider store={store}>
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
-        </View>
+        <PaperProvider
+          settings={{
+            icon: props => <AwesomeIcon {...props} />,
+          }}>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <AppNavigator />
+          </View>
+        </PaperProvider>
       </Provider>
     )
   }
