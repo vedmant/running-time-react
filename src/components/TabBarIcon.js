@@ -1,6 +1,6 @@
-import { FontAwesome } from '@expo/vector-icons';
-import React from 'react';
-import Colors from '../constants/Colors';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import React from 'react'
+import Colors from '../constants/Colors'
 
 export default function TabBarIcon(props) {
   return (
@@ -10,5 +10,5 @@ export default function TabBarIcon(props) {
       style={{ marginBottom: -3 }}
       color={props.focused ? Colors.tabIconSelected : Colors.tabIconDefault}
     />
-  );
+  )
 }

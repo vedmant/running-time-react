@@ -1,6 +1,7 @@
 import React from 'react'
 import { Platform } from 'react-native'
-import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
+import { createStackNavigator } from 'react-navigation-stack'
 import TabBarIcon from '../components/TabBarIcon'
 import DashboardScreen from '../screens/Dashboard/DashboardScreen'
 import AddEntryScreen from '../screens/Entries/AddEntryScreen'

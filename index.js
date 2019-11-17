@@ -1,10 +1,9 @@
-import { registerRootComponent } from 'expo'
-import { activateKeepAwake } from 'expo-keep-awake'
+/**
+ * @format
+ */
+
+import { AppRegistry } from 'react-native'
 import App from './src/App'
+import { name as appName } from './app.json'
 
-
-if (__DEV__) {
-  activateKeepAwake()
-}
-
-registerRootComponent(App)
+AppRegistry.registerComponent(appName, () => App)

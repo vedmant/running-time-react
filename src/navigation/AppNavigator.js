@@ -1,4 +1,5 @@
-import { createAppContainer, createStackNavigator, createSwitchNavigator } from 'react-navigation'
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
 import AuthLoadingScreen from '../screens/Auth/AuthLoadingScreen'
 import AuthScreen from '../screens/Auth/AuthScreen'
 import MainTabNavigator from './MainTabNavigator'

@@ -1,37 +1,4 @@
 {
-  "expo": {
-    "name": "Running Time",
-    "slug": "running-time",
-    "privacy": "public",
-    "sdkVersion": "35.0.0",
-    "platforms": [
-      "ios",
-      "android"
-    ],
-    "entryPoint": "index.js",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#f5f8fa"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.vedmant.runningtime"
-    },
-    "android": {
-      "package": "com.vedmant.runningtime",
-      "permissions" : []
-    },
-    "description": "**React Native Sample Project** is a tutorial React Native Mobile Application that uses [Running Time](https://github.com/vedmant/running-time) API backend",
-    "githubUrl": "https://github.com/vedmant/running-time-react"
-  }
+  "name": "RunningTime",
+  "displayName": "Running Time"
 }

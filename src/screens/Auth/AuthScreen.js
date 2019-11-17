@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, Dimensions } from 'react-native'
-import { TabView, TabBar, SceneMap } from 'react-native-tab-view'
+import { TabView, TabBar } from 'react-native-tab-view'
 import { connect } from 'react-redux'
 import LoginTab from './LoginTab'
 import RegisterTab from './RegisterTab'
