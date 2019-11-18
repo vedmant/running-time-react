@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "android": "npx react-native run-android",
+    "android-release": "npx react-native run-android --variant=release",
     "ios": "npx react-native run-ios",
     "start": "npx react-native start",
     "test": "jest",
@@ -13,6 +14,10 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.6.3",
     "@react-native-community/datetimepicker": "^2.1.0",
+    "appcenter": "2.6.0",
+    "appcenter-analytics": "2.6.0",
+    "appcenter-crashes": "2.6.0",
+    "appcenter-push": "2.6.0",
     "axios": "^0.19.0",
     "dayjs": "^1.8.17",
     "prop-types": "^15.7.2",

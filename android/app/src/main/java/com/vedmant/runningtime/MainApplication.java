@@ -1,4 +1,4 @@
-package com.runningtime;
+package com.vedmant.runningtime;
 
 import android.app.Application;
 import android.content.Context;

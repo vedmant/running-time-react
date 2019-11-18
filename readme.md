@@ -33,12 +33,12 @@ It will open Expo tab in your browser where you can select to run it on Android 
 
 ### TODO ###
 
+- Splash screen and app icon
 - Replace timepicker with better solution
 - Add Eslinter
 - Better login / register screens design
 - Reports tab
 - Refactor code
-- Splash screen and app icon
 - Unit tests
 - Continuous integration
 - Dark theme

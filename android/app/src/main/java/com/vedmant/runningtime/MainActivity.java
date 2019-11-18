@@ -1,4 +1,4 @@
-package com.runningtime;
+package com.vedmant.runningtime;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
