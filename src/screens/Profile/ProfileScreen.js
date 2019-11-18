@@ -3,14 +3,14 @@ import { StyleSheet } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { logout } from '../../actions/auth'
 import { connect } from 'react-redux'
-import Button from '../../components/Button'
 import ProfileForm from './ProfileForm'
 import Colors from '../../constants/Colors'
+import { Button } from 'react-native-paper'
 
 function ProfileScreen(props) {
   return (
     <KeyboardAwareScrollView style={styles.container} enableOnAndroid>
-      <Button onPress={() => {
+      <Button mode="contained" style={{ marginBottom: 20 }} icon="sign-out" onPress={() => {
         props.dispatch(logout())
         props.navigation.navigate('Auth')
       }}>Logout</Button>

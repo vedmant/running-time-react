@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { TextField } from 'react-native-material-textfield'
 import Toast from 'react-native-root-toast'
 import { register } from '../../actions/auth'
-import Button from '../../components/Button'
 import Panel from '../../components/Panel'
 import Colors from '../../constants/Colors'
+import { TextInput, Button, HelperText } from 'react-native-paper'
 
 const initialErrors = { name: [], email: [], password: [], password_confirmation: [] }
 const initialValues = { name: 'Test', email: 'user@gmail.com', password: '123456', password_confirmation: '123456' }
@@ -16,7 +15,7 @@ export default RegisterTab = ({ dispatch, navigation }) => {
   const [form, setForm] = useState({ ...initialValues })
   const [errors, setErrors] = useState(initialErrors)
 
-  const updateForm = data => setForm(Object.assign(form, data))
+  const updateForm = data => setForm({ ...form, ...data })
 
   const onSubmit = async () => {
     setLoading(true)
@@ -38,38 +37,45 @@ export default RegisterTab = ({ dispatch, navigation }) => {
   return (
     <KeyboardAwareScrollView style={styles.scene} enableOnAndroid>
       <Panel>
-        <TextField
+        <TextInput
           label='Name'
           onChangeText={val => updateForm({ name: val })}
           value={form.name}
-          autoCompleteType="name"
-          error={errors.name[0]}
+          error={!!errors.name[0]}
+          mode="outlined"
         />
-        <TextField
+        {errors.name[0] && <HelperText type="error">{errors.name[0]}</HelperText>}
+        <TextInput
           label='Email'
           onChangeText={val => updateForm({ email: val })}
           value={form.email}
+          error={!!errors.email[0]}
           autoCompleteType="email"
-          error={errors.email[0]}
+          mode="outlined"
         />
-        <TextField
+        {errors.email[0] && <HelperText type="error">{errors.email[0]}</HelperText>}
+        <TextInput
           label='Password'
           onChangeText={val => updateForm({ password: val })}
           value={form.password}
-          error={errors.password[0]}
+          error={!!errors.password[0]}
           autoCompleteType='password'
+          mode="outlined"
           secureTextEntry={true}
         />
-        <TextField
+        {errors.password[0] && <HelperText type="error">{errors.password[0]}</HelperText>}
+        <TextInput
           label='Password confirmation'
           onChangeText={val => updateForm({ password_confirmation: val })}
           value={form.password_confirmation}
-          error={errors.password_confirmation[0]}
+          error={!!errors.password_confirmation[0]}
           autoCompleteType='password'
+          mode="outlined"
           secureTextEntry={true}
         />
+        {errors.password_confirmation[0] && <HelperText type="error">{errors.password_confirmation[0]}</HelperText>}
         <View style={{ paddingTop: 20 }} />
-        <Button onPress={onSubmit} isLoading={loading}>Register</Button>
+        <Button mode="contained" icon="user" onPress={onSubmit} loading={loading}>Register</Button>
       </Panel>
     </KeyboardAwareScrollView>
   )

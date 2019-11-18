@@ -107,7 +107,12 @@ class Entries extends Component {
         />
         <FAB
           style={styles.addButton}
-          icon="plus"
+          icon={({ color }) => (
+            <AwesomeIcon
+              name="plus"
+              style={{ color, fontSize: 20, paddingLeft: 4, paddingTop: 2 }}
+            />
+          )}
           onPress={() => this.props.navigation.navigate('AddEntry')}
         />
       </View>
@@ -128,11 +133,6 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
-  },
-  addButtonText: {
-    color: 'white',
-    fontSize: 25,
-    paddingBottom: 3,
   },
   item: {},
   distance: {},

@@ -7,15 +7,17 @@ import AppNavigator from './navigation/AppNavigator'
 import configureStore from './store/configureStore'
 import { Provider as PaperProvider } from 'react-native-paper'
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome'
+import Theme from './constants/Theme'
 
 export default function App(props) {
   const [store, setStore] = useState(null)
   const [storeReady, setStoreReady] = useState(false)
+  const [addedToken, setAddedToken] = useState(false)
   if (!store) {
     setStore(configureStore(() => setStoreReady(true)))
   }
 
-  if (storeReady) addAxiosToken(store)
+  if (storeReady && !addedToken) addAxiosToken(store) && setAddedToken(true)
 
   if (!storeReady) {
     return (
@@ -25,6 +27,7 @@ export default function App(props) {
     return (
       <Provider store={store}>
         <PaperProvider
+          theme={Theme}
           settings={{
             icon: props => <AwesomeIcon {...props} />,
           }}>

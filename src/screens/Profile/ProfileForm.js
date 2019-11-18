@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { TextField } from 'react-native-material-textfield'
 import Toast from 'react-native-root-toast'
 import { updateProfile } from '../../actions/auth'
-import Button from '../../components/Button'
 import Panel from '../../components/Panel'
+import { TextInput, Button, HelperText } from 'react-native-paper'
 
 const initialErrors = { name: [], email: [], password: [], password_confirmation: [] }
 
@@ -36,38 +35,45 @@ export default ProfileForm = ({ dispatch, navigation, me }) => {
 
   return (
     <Panel header="My Profile">
-      <TextField
+      <TextInput
         label='Name'
         onChangeText={val => updateForm({ name: val })}
         value={form.name}
-        autoCompleteType="name"
-        error={errors.name[0]}
+        error={!!errors.name[0]}
+        mode="outlined"
       />
-      <TextField
+      {errors.name[0] && <HelperText type="error">{errors.name[0]}</HelperText>}
+      <TextInput
         label='Email'
         onChangeText={val => updateForm({ email: val })}
         value={form.email}
+        error={!!errors.email[0]}
         autoCompleteType="email"
-        error={errors.email[0]}
+        mode="outlined"
       />
-      <TextField
+      {errors.email[0] && <HelperText type="error">{errors.email[0]}</HelperText>}
+      <TextInput
         label='Password'
         onChangeText={val => updateForm({ password: val })}
         value={form.password}
-        error={errors.password[0]}
+        error={!!errors.password[0]}
         autoCompleteType='password'
+        mode="outlined"
         secureTextEntry={true}
       />
-      <TextField
+      {errors.password[0] && <HelperText type="error">{errors.password[0]}</HelperText>}
+      <TextInput
         label='Password confirmation'
         onChangeText={val => updateForm({ password_confirmation: val })}
         value={form.password_confirmation}
-        error={errors.password_confirmation[0]}
+        error={!!errors.password_confirmation[0]}
         autoCompleteType='password'
+        mode="outlined"
         secureTextEntry={true}
       />
+      {errors.password_confirmation[0] && <HelperText type="error">{errors.password_confirmation[0]}</HelperText>}
       <View style={{ paddingTop: 20 }} />
-      <Button onPress={onSubmit} isLoading={loading}>Update</Button>
+      <Button mode="contained" icon="user" onPress={onSubmit} loading={loading}>Update</Button>
     </Panel>
   )
 }
