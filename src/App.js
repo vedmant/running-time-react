@@ -8,7 +8,6 @@ import { Provider as PaperProvider } from 'react-native-paper'
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import Theme from './constants/Theme'
 import Push from 'appcenter-push'
-import Analytics from 'appcenter-analytics'
 
 let configureStore
 if (__DEV__) configureStore = require('./store/configureStoreDev').default
@@ -29,7 +28,6 @@ export default function App(props) {
       <View><Text>Loading...</Text></View>
     )
   } else {
-    Analytics.trackEvent('App rendered', { test: 'test' })
     return (
       <Provider store={store}>
         <PaperProvider
