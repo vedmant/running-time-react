@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "904603640925",
+    "firebase_url": "https://running-time-eeea0.firebaseio.com",
+    "project_id": "running-time-eeea0",
+    "storage_bucket": "running-time-eeea0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904603640925:android:e1021783205780dfe7d9b4",
+        "android_client_info": {
+          "package_name": "com.vedmant.runningtime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "904603640925-2ojumn4dllupcfse0msebfpm55vcsmb6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABK_TDF0hSzq63b950bvK6OuTkqhv0u50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "904603640925-2ojumn4dllupcfse0msebfpm55vcsmb6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
