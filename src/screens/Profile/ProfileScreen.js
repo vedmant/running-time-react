@@ -7,14 +7,24 @@ import ProfileForm from './ProfileForm'
 import Colors from '../../constants/Colors'
 import { Button } from 'react-native-paper'
 
-function ProfileScreen(props) {
+function ProfileScreen (props) {
   return (
     <KeyboardAwareScrollView style={styles.container} enableOnAndroid>
-      <Button mode="contained" style={{ marginBottom: 20 }} icon="sign-out" onPress={() => {
-        props.dispatch(logout())
-        props.navigation.navigate('Auth')
-      }}>Logout</Button>
-      <ProfileForm {...props} message="Successfully updated profile" button="Update" />
+      <Button
+        mode="contained"
+        style={{ marginBottom: 20 }}
+        icon="sign-out"
+        onPress={() => {
+          props.dispatch(logout())
+          props.navigation.navigate('Auth')
+        }}>
+        Logout
+      </Button>
+      <ProfileForm
+        {...props}
+        message="Successfully updated profile"
+        button="Update"
+      />
     </KeyboardAwareScrollView>
   )
 }

@@ -1,11 +1,11 @@
 import axios from 'axios'
 import * as config from '../config'
 
-export function stopLoading() {
+export function stopLoading () {
   return { type: 'STOP_LOADING' }
 }
 
-export function loadDashboard() {
+export function loadDashboard () {
   return async dispatch => {
     dispatch({ type: 'LOAD_DASHBOARD' })
 

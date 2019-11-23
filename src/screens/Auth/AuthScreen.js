@@ -19,17 +19,22 @@ class AuthScreen extends React.Component {
     ],
   }
 
-  render() {
+  render () {
     return (
       <View style={styles.container}>
         <TabView
           navigationState={this.state}
-          renderTabBar={props => <TabBar {...props} style={{ backgroundColor: '#666' }} />}
+          renderTabBar={props => (
+            <TabBar {...props} style={{ backgroundColor: '#666' }} />
+          )}
           renderScene={({ route }) => {
             switch (route.key) {
-              case 'login': return <LoginTab {...this.props} />
-              case 'register': return <RegisterTab {...this.props} />
-              default: return null;
+              case 'login':
+                return <LoginTab {...this.props} />
+              case 'register':
+                return <RegisterTab {...this.props} />
+              default:
+                return null
             }
           }}
           onIndexChange={index => this.setState({ index })}

@@ -7,9 +7,13 @@ import dayjs from 'dayjs'
 import { TextInput, Button, HelperText } from 'react-native-paper'
 
 const initialErrors = { date: [], distance: [], time: [] }
-const initialValues = { date: dayjs().format('MM/DD/YYYY'), distance: '', time: '' }
+const initialValues = {
+  date: dayjs().format('MM/DD/YYYY'),
+  distance: '',
+  time: '',
+}
 
-export default EntryForm = ({ dispatch, onSuccess, item }) => {
+export default function ({ dispatch, onSuccess, item }) {
   const [form, setForm] = useState({ ...initialValues })
   const [errors, setErrors] = useState(initialErrors)
   const [loading, setLoading] = useState(false)
@@ -20,20 +24,31 @@ export default EntryForm = ({ dispatch, onSuccess, item }) => {
 
   useEffect(() => {
     if (item) {
-      setForm({ date: dayjs(item.date).format('MM/DD/YYYY'), distance: item.distance, time: item.time })
+      setForm({
+        date: dayjs(item.date).format('MM/DD/YYYY'),
+        distance: item.distance,
+        time: item.time,
+      })
     }
   }, [item])
 
   const onSubmit = async () => {
     setLoading(true)
     try {
-      if (item) await dispatch(updateEntry({ id: item.id, form }))
-      else await dispatch(storeEntry(form))
+      if (item) {
+        await dispatch(updateEntry({ id: item.id, form }))
+      } else {
+        await dispatch(storeEntry(form))
+      }
       setErrors(initialErrors)
-      if (!item) setForm({ ...initialValues })
+      if (!item) {
+        setForm({ ...initialValues })
+      }
       Toast.show(`Successfully ${item ? 'updated' : 'added new'} record`)
       dispatch(loadEntries())
-      if (onSuccess) onSuccess()
+      if (onSuccess) {
+        onSuccess()
+      }
     } catch (e) {
       console.log(e)
       if (e.response && e.response.data && e.response.data.errors) {
@@ -49,7 +64,7 @@ export default EntryForm = ({ dispatch, onSuccess, item }) => {
   return (
     <View>
       <TextInput
-        label='Date'
+        label="Date"
         onChangeText={val => updateForm({ date: val })}
         value={form.date}
         error={!!errors.date[0]}
@@ -58,15 +73,17 @@ export default EntryForm = ({ dispatch, onSuccess, item }) => {
       />
       {errors.date[0] && <HelperText type="error">{errors.date[0]}</HelperText>}
       <TextInput
-        label='Distance'
+        label="Distance"
         onChangeText={val => updateForm({ distance: val })}
         value={form.distance + ''}
         error={!!errors.distance[0]}
         mode="outlined"
       />
-      {errors.distance[0] && <HelperText type="error">{errors.distance[0]}</HelperText>}
+      {errors.distance[0] && (
+        <HelperText type="error">{errors.distance[0]}</HelperText>
+      )}
       <TextInput
-        label='Time'
+        label="Time"
         onChangeText={val => updateForm({ time: val })}
         value={form.time}
         error={!!errors.time[0]}
@@ -77,7 +94,7 @@ export default EntryForm = ({ dispatch, onSuccess, item }) => {
       <DateTimePicker
         isVisible={isDatePickerVisible}
         mode="date"
-        onConfirm={(date) => {
+        onConfirm={date => {
           console.log(dayjs(date).format('MM/DD/YYYY'))
           updateForm({ date: dayjs(date).format('MM/DD/YYYY') })
           setDatePickerVisibility(false)
@@ -87,7 +104,7 @@ export default EntryForm = ({ dispatch, onSuccess, item }) => {
       <DateTimePicker
         isVisible={isTimePickerVisible}
         mode="time"
-        onConfirm={(date) => {
+        onConfirm={date => {
           console.log(date)
           updateForm({ time: dayjs(date).format('HH:mm:ss') })
           setTimePickerVisibility(false)
@@ -95,7 +112,9 @@ export default EntryForm = ({ dispatch, onSuccess, item }) => {
         onCancel={() => setTimePickerVisibility(false)}
       />
       <View style={{ paddingTop: 20 }} />
-      <Button mode="contained" onPress={onSubmit} loading={loading}>Submit</Button>
+      <Button mode="contained" onPress={onSubmit} loading={loading}>
+        Submit
+      </Button>
     </View>
   )
 }

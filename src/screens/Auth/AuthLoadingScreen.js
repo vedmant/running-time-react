@@ -9,19 +9,21 @@ const stateToProps = state => ({
   accessToken: state.auth.accessToken,
 })
 
-export default connect(stateToProps)(({ dispatch, navigation, accessToken }) => {
-  useEffect(() => {
-    dispatch(checkLogin())
-      .then(() => navigation.navigate('Main'))
-      .catch(() => navigation.navigate('Auth'))
-  }, [])
+export default connect(stateToProps)(
+  ({ dispatch, navigation, accessToken }) => {
+    useEffect(() => {
+      dispatch(checkLogin())
+        .then(() => navigation.navigate('Main'))
+        .catch(() => navigation.navigate('Auth'))
+    }, [dispatch, navigation])
 
-  return (
-    <View style={styles.container}>
-      <ActivityIndicator animating size="large" />
-    </View>
-  )
-})
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator animating size="large" />
+      </View>
+    )
+  },
+)
 
 const styles = StyleSheet.create({
   container: {

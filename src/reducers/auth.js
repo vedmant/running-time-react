@@ -8,11 +8,10 @@ const initialState = Immutable({
 
 const authReducer = function (state = initialState, action) {
   switch (action.type) {
-
     case 'CHECK_LOGIN_OK':
       return Immutable.merge(state, {
         me: action.data,
-        authChecked: true
+        authChecked: true,
       })
 
     case 'CHECK_LOGIN_FAIL':
@@ -45,7 +44,7 @@ const authReducer = function (state = initialState, action) {
       })
 
     default:
-      return state;
+      return state
   }
 }
 

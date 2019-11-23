@@ -12,13 +12,11 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducer)
 
-export default function configureStore(onCompletion) {
-  const enhancer = compose(
-    applyMiddleware(thunk)
-  )
+export default function configureStore (onCompletion) {
+  const enhancer = compose(applyMiddleware(thunk))
 
-  let store = createStore(persistedReducer, enhancer)
-  let persistor = persistStore(store, null, onCompletion)
+  const store = createStore(persistedReducer, enhancer)
+  persistStore(store, null, onCompletion)
 
   return store
 }

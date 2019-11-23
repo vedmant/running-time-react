@@ -5,10 +5,20 @@ import { updateProfile } from '../../actions/auth'
 import Panel from '../../components/Panel'
 import { TextInput, Button, HelperText } from 'react-native-paper'
 
-const initialErrors = { name: [], email: [], password: [], password_confirmation: [] }
+const initialErrors = {
+  name: [],
+  email: [],
+  password: [],
+  password_confirmation: [],
+}
 
-export default ProfileForm = ({ dispatch, navigation, me }) => {
-  const initialValues = { name: me.name, email: me.email, password: '', password_confirmation: '' }
+export default function ({ dispatch, navigation, me }) {
+  const initialValues = {
+    name: me.name,
+    email: me.email,
+    password: '',
+    password_confirmation: '',
+  }
 
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({ ...initialValues })
@@ -36,7 +46,7 @@ export default ProfileForm = ({ dispatch, navigation, me }) => {
   return (
     <Panel header="My Profile">
       <TextInput
-        label='Name'
+        label="Name"
         onChangeText={val => updateForm({ name: val })}
         value={form.name}
         error={!!errors.name[0]}
@@ -44,36 +54,44 @@ export default ProfileForm = ({ dispatch, navigation, me }) => {
       />
       {errors.name[0] && <HelperText type="error">{errors.name[0]}</HelperText>}
       <TextInput
-        label='Email'
+        label="Email"
         onChangeText={val => updateForm({ email: val })}
         value={form.email}
         error={!!errors.email[0]}
         autoCompleteType="email"
         mode="outlined"
       />
-      {errors.email[0] && <HelperText type="error">{errors.email[0]}</HelperText>}
+      {errors.email[0] && (
+        <HelperText type="error">{errors.email[0]}</HelperText>
+      )}
       <TextInput
-        label='Password'
+        label="Password"
         onChangeText={val => updateForm({ password: val })}
         value={form.password}
         error={!!errors.password[0]}
-        autoCompleteType='password'
+        autoCompleteType="password"
         mode="outlined"
         secureTextEntry={true}
       />
-      {errors.password[0] && <HelperText type="error">{errors.password[0]}</HelperText>}
+      {errors.password[0] && (
+        <HelperText type="error">{errors.password[0]}</HelperText>
+      )}
       <TextInput
-        label='Password confirmation'
+        label="Password confirmation"
         onChangeText={val => updateForm({ password_confirmation: val })}
         value={form.password_confirmation}
         error={!!errors.password_confirmation[0]}
-        autoCompleteType='password'
+        autoCompleteType="password"
         mode="outlined"
         secureTextEntry={true}
       />
-      {errors.password_confirmation[0] && <HelperText type="error">{errors.password_confirmation[0]}</HelperText>}
+      {errors.password_confirmation[0] && (
+        <HelperText type="error">{errors.password_confirmation[0]}</HelperText>
+      )}
       <View style={{ paddingTop: 20 }} />
-      <Button mode="contained" icon="user" onPress={onSubmit} loading={loading}>Update</Button>
+      <Button mode="contained" icon="user" onPress={onSubmit} loading={loading}>
+        Update
+      </Button>
     </Panel>
   )
 }

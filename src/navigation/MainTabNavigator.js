@@ -44,7 +44,7 @@ const ProfileStack = createStackNavigator(
   {
     Settings: ProfileScreen,
   },
-  config
+  config,
 )
 ProfileStack.navigationOptions = {
   tabBarLabel: 'Profile',

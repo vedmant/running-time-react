@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react'
 import { TextField as TextFieldMaterial } from 'react-native-material-textfield'
 
-export default TextField = React.forwardRef(({ value, ...props }, ref) => {
+export default React.forwardRef(({ value, ...props }, ref) => {
   const rref = useRef(null)
 
-  const setReference = (reference) => {
+  const setReference = reference => {
     ref && ref(reference)
     rref.current = reference
   }
@@ -13,10 +13,5 @@ export default TextField = React.forwardRef(({ value, ...props }, ref) => {
     rref.current.setValue(value)
   }, [value])
 
-  return (
-    <TextFieldMaterial
-      ref={setReference}
-      {...props}
-    />
-  )
+  return <TextFieldMaterial ref={setReference} {...props} />
 })

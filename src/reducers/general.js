@@ -7,7 +7,6 @@ const initialState = Immutable({
 
 const generalReducer = function (state = initialState, action) {
   switch (action.type) {
-
     case 'CHECK_LOGIN':
     case 'LOGIN':
     case 'REGISTER':
@@ -61,7 +60,7 @@ const generalReducer = function (state = initialState, action) {
       })
 
     default:
-      return state;
+      return state
   }
 }
 

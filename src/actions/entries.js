@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as config from '../config'
 
-export function loadEntries(params) {
+export function loadEntries (params) {
   return async dispatch => {
     dispatch({ type: 'LOAD_ENTRIES' })
 
@@ -15,7 +15,7 @@ export function loadEntries(params) {
   }
 }
 
-export function loadMoreEntries(params) {
+export function loadMoreEntries (params) {
   return async dispatch => {
     dispatch({ type: 'LOAD_MORE_ENTRIES' })
 
@@ -29,7 +29,7 @@ export function loadMoreEntries(params) {
   }
 }
 
-export function loadEntry(id) {
+export function loadEntry (id) {
   return async dispatch => {
     dispatch({ type: 'LOAD_ENTRY' })
 
@@ -43,7 +43,7 @@ export function loadEntry(id) {
   }
 }
 
-export function storeEntry(form) {
+export function storeEntry (form) {
   return async dispatch => {
     dispatch({ type: 'STORE_ENTRY' })
 
@@ -57,12 +57,15 @@ export function storeEntry(form) {
   }
 }
 
-export function updateEntry({ id, form }) {
+export function updateEntry ({ id, form }) {
   return async dispatch => {
     dispatch({ type: 'UPDATE_ENTRY' })
 
     try {
-      const res = await axios.post(config.apiPath + 'entry/' + id, { _method: 'PUT', ...form })
+      const res = await axios.post(config.apiPath + 'entry/' + id, {
+        _method: 'PUT',
+        ...form,
+      })
       dispatch({ type: 'UPDATE_ENTRY_OK', data: res.data })
     } catch (e) {
       dispatch({ type: 'UPDATE_ENTRY_FAIL', error: e })
@@ -71,12 +74,14 @@ export function updateEntry({ id, form }) {
   }
 }
 
-export function deleteEntry(id) {
+export function deleteEntry (id) {
   return async dispatch => {
     dispatch({ type: 'DELETE_ENTRY' })
 
     try {
-      const res = await axios.post(config.apiPath + 'entry/' + id, { _method: 'DELETE' })
+      await axios.post(config.apiPath + 'entry/' + id, {
+        _method: 'DELETE',
+      })
       dispatch({ type: 'DELETE_ENTRY_OK', data: { id } })
     } catch (e) {
       dispatch({ type: 'DELETE_ENTRY_FAIL', error: e })

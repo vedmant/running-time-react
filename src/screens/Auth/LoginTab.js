@@ -8,7 +8,7 @@ import { TextInput, Button, HelperText } from 'react-native-paper'
 const initialErrors = { email: [], password: [] }
 const initialValues = { email: 'user@gmail.com', password: '123456' }
 
-export default LoginTab = ({ dispatch, navigation }) => {
+export default function ({ dispatch, navigation }) {
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({ ...initialValues })
   const [errors, setErrors] = useState(initialErrors)
@@ -36,26 +36,36 @@ export default LoginTab = ({ dispatch, navigation }) => {
     <View style={styles.scene}>
       <Panel>
         <TextInput
-          label='Email'
+          label="Email"
           onChangeText={val => updateForm({ email: val })}
           value={form.email}
           error={!!errors.email[0]}
           autoCompleteType="email"
           mode="outlined"
         />
-        {errors.email[0] && <HelperText type="error">{errors.email[0]}</HelperText>}
+        {errors.email[0] && (
+          <HelperText type="error">{errors.email[0]}</HelperText>
+        )}
         <TextInput
-          label='Password'
+          label="Password"
           onChangeText={val => updateForm({ password: val })}
           value={form.password}
           error={!!errors.password[0]}
-          autoCompleteType='password'
+          autoCompleteType="password"
           secureTextEntry={true}
           mode="outlined"
         />
-        {errors.password[0] && <HelperText type="error">{errors.password[0]}</HelperText>}
+        {errors.password[0] && (
+          <HelperText type="error">{errors.password[0]}</HelperText>
+        )}
         <View style={{ paddingTop: 20 }} />
-        <Button mode="contained" icon="user" onPress={onSubmit} loading={loading}>Login</Button>
+        <Button
+          mode="contained"
+          icon="user"
+          onPress={onSubmit}
+          loading={loading}>
+          Login
+        </Button>
       </Panel>
     </View>
   )

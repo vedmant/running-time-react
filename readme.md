@@ -35,12 +35,9 @@ It will open Expo tab in your browser where you can select to run it on Android 
 
 - Splash screen and app icon
 - Replace timepicker with better solution
-- Add Eslinter
 - Better login / register screens design
 - Reports tab
-- Refactor code
 - Unit tests
-- Continuous integration
 - Dark theme
 - Background GPS tracking (start / stop, create record after finish)
 

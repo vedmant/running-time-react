@@ -1,11 +1,11 @@
 import axios from 'axios'
 import * as config from '../config'
 
-export function checkLogin() {
+export function checkLogin () {
   return async dispatch => {
     dispatch({ type: 'CHECK_LOGIN' })
 
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await new Promise(resolve => setTimeout(resolve, 1000))
     try {
       const res = await axios.get(config.apiPath + 'user/me')
       dispatch({ type: 'CHECK_LOGIN_OK', data: res.data })
@@ -16,7 +16,7 @@ export function checkLogin() {
   }
 }
 
-export function login(form) {
+export function login (form) {
   return async dispatch => {
     dispatch({ type: 'LOGIN' })
     try {
@@ -29,11 +29,11 @@ export function login(form) {
   }
 }
 
-export function logout() {
+export function logout () {
   return { type: 'LOGOUT_OK' }
 }
 
-export function register(form) {
+export function register (form) {
   return async dispatch => {
     dispatch({ type: 'REGISTER' })
     try {
@@ -46,11 +46,14 @@ export function register(form) {
   }
 }
 
-export function updateProfile({ id, form }) {
+export function updateProfile ({ id, form }) {
   return async dispatch => {
     dispatch({ type: 'UPDATE_PROFILE' })
     try {
-      const res = await axios.post(`${config.apiPath}user/${id}`, { _method: 'PUT', ...form })
+      const res = await axios.post(`${config.apiPath}user/${id}`, {
+        _method: 'PUT',
+        ...form,
+      })
       dispatch({ type: 'UPDATE_PROFILE_OK', data: res.data })
     } catch (e) {
       dispatch({ type: 'UPDATE_PROFILE_FAIL', error: e })

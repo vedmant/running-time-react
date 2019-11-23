@@ -4,7 +4,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { persistStore, persistReducer } from 'redux-persist'
 import reducer from '../reducers'
-import Reactotron from '../../ReactotronConfig'
+import Reactotron from '../ReactotronConfig'
 import { createLogger } from 'redux-logger'
 
 const persistConfig = {
@@ -15,7 +15,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducer)
 
-export default function configureStore(onCompletion) {
+export default function configureStore (onCompletion) {
   const enhancer = compose(
     applyMiddleware(thunk),
     applyMiddleware(createLogger()),
@@ -29,8 +29,8 @@ export default function configureStore(onCompletion) {
     Reactotron.createEnhancer(),
   )
 
-  let store = createStore(persistedReducer, enhancer)
-  let persistor = persistStore(store, null, onCompletion)
+  const store = createStore(persistedReducer, enhancer)
+  persistStore(store, null, onCompletion)
 
   return store
 }

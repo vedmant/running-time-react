@@ -5,7 +5,7 @@ import Panel from '../../components/Panel'
 import Colors from '../../constants/Colors'
 import EntryForm from './EntryForm'
 
-function AddEntryScreen({ dispatch, navigation }) {
+function AddEntryScreen ({ dispatch, navigation }) {
   return (
     <View style={styles.container}>
       <Panel>

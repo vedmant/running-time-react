@@ -5,13 +5,16 @@ import AuthScreen from '../screens/Auth/AuthScreen'
 import MainTabNavigator from './MainTabNavigator'
 
 export default createAppContainer(
-  createSwitchNavigator({
-    AuthLoading: AuthLoadingScreen,
-    Auth: createStackNavigator({
-      Auth: AuthScreen,
-    }),
-    Main: MainTabNavigator,
-  }, {
-    initialRouteName: 'AuthLoading',
-  })
+  createSwitchNavigator(
+    {
+      AuthLoading: AuthLoadingScreen,
+      Auth: createStackNavigator({
+        Auth: AuthScreen,
+      }),
+      Main: MainTabNavigator,
+    },
+    {
+      initialRouteName: 'AuthLoading',
+    },
+  ),
 )
