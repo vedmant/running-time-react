@@ -27,7 +27,7 @@ export default function ({ dispatch, onSuccess, item }) {
       setForm({
         date: dayjs(item.date).format('MM/DD/YYYY'),
         distance: item.distance,
-        time: item.time,
+        time: item.time.split(':').map(s => s.padStart(2, '0')).join(':'),
       })
     }
   }, [item])
@@ -78,6 +78,7 @@ export default function ({ dispatch, onSuccess, item }) {
         value={form.distance + ''}
         error={!!errors.distance[0]}
         mode="outlined"
+        keyboardType="number-pad"
       />
       {errors.distance[0] && (
         <HelperText type="error">{errors.distance[0]}</HelperText>
