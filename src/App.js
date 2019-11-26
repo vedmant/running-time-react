@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Platform, StatusBar, StyleSheet, View, Text, AppState } from 'react-native'
 import { Provider } from 'react-redux'
 import Colors from './constants/Colors'
@@ -9,6 +9,7 @@ import AwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import Theme from './constants/Theme'
 import Push from 'appcenter-push'
 import codePush from 'react-native-code-push'
+import RNBootSplash from 'react-native-bootsplash'
 
 let configureStore
 if (__DEV__) {
@@ -28,6 +29,10 @@ export default function App (props) {
   if (storeReady && !addedToken) {
     addAxiosToken(store) && setAddedToken(true)
   }
+
+  useEffect(() => {
+    RNBootSplash.hide({ duration: 250 })
+  }, [])
 
   if (!storeReady) {
     return (
