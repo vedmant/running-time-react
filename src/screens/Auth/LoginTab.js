@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import Toast from 'react-native-root-toast'
 import { login } from '../../actions/auth'
 import Panel from '../../components/Panel'
@@ -34,6 +34,7 @@ export default function ({ dispatch, navigation }) {
 
   return (
     <View style={styles.scene}>
+      <Text>Test</Text>
       <Panel>
         <TextInput
           label="Email"
