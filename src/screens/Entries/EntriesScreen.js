@@ -7,7 +7,7 @@ import Panel from '../../components/Panel'
 import SmallButton from '../../components/SmallButton'
 import Colors from '../../constants/Colors'
 import { FAB } from 'react-native-paper'
-import AwesomeIcon from 'react-native-vector-icons/FontAwesome'
+import { Plus } from 'phosphor-react-native'
 
 class Entries extends Component {
   static navigationOptions = {
@@ -136,9 +136,9 @@ class Entries extends Component {
         <FAB
           style={styles.addButton}
           icon={({ color }) => (
-            <AwesomeIcon
-              name="plus"
-              style={{ color, fontSize: 20, paddingLeft: 4, paddingTop: 2 }}
+            <Plus
+              size={20}
+              style={{ color, paddingLeft: 4, paddingTop: 2 }}
             />
           )}
           onPress={() => this.props.navigation.navigate('AddEntry')}

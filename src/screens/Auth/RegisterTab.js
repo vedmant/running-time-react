@@ -6,6 +6,7 @@ import { register } from '../../actions/auth'
 import Panel from '../../components/Panel'
 import Colors from '../../constants/Colors'
 import { TextInput, Button, HelperText } from 'react-native-paper'
+import { User } from 'phosphor-react-native'
 
 const initialErrors = {
   name: [],
@@ -13,6 +14,7 @@ const initialErrors = {
   password: [],
   password_confirmation: [],
 }
+
 const initialValues = {
   name: 'Test',
   email: 'user@gmail.com',
@@ -64,6 +66,7 @@ export default function ({ dispatch, navigation }) {
           error={!!errors.email[0]}
           autoCompleteType="email"
           mode="outlined"
+          style={{marginTop: 20}}
         />
         {errors.email[0] && (
           <HelperText type="error">{errors.email[0]}</HelperText>
@@ -76,6 +79,7 @@ export default function ({ dispatch, navigation }) {
           autoCompleteType="password"
           mode="outlined"
           secureTextEntry={true}
+          style={{marginTop: 20}}
         />
         {errors.password[0] && (
           <HelperText type="error">{errors.password[0]}</HelperText>
@@ -88,6 +92,7 @@ export default function ({ dispatch, navigation }) {
           autoCompleteType="password"
           mode="outlined"
           secureTextEntry={true}
+          style={{marginTop: 20}}
         />
         {errors.password_confirmation[0] && (
           <HelperText type="error">
@@ -97,7 +102,7 @@ export default function ({ dispatch, navigation }) {
         <View style={{ paddingTop: 20 }} />
         <Button
           mode="contained"
-          icon="user"
+          icon={() => <User weight={'bold'} size={18} color={'white'} />}
           onPress={onSubmit}
           loading={loading}>
           Register

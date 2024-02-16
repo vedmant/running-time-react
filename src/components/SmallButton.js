@@ -1,10 +1,8 @@
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import React from 'react'
 import { StyleSheet, TouchableHighlight, View } from 'react-native'
 
 export default function Panel ({
   type = 'primary',
-  icon,
   children,
   style,
   ...props
@@ -12,7 +10,6 @@ export default function Panel ({
   return (
     <TouchableHighlight style={[styles.button, styles[type], style]} {...props}>
       <View>
-        {icon && <FontAwesome name={icon} size={15} color="white" />}
         {children}
       </View>
     </TouchableHighlight>

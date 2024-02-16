@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import Toast from 'react-native-root-toast'
-import { login } from '../../actions/auth'
 import Panel from '../../components/Panel'
 import { TextInput, Button, HelperText } from 'react-native-paper'
+import { User } from 'phosphor-react-native'
+import { useAuthStore } from '@/stores/auth'
 
 const initialErrors = { email: [], password: [] }
 const initialValues = { email: 'user@gmail.com', password: '123456' }
 
-export default function ({ dispatch, navigation }) {
+export default function ({ navigation }) {
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({ ...initialValues })
   const [errors, setErrors] = useState(initialErrors)
@@ -18,10 +19,13 @@ export default function ({ dispatch, navigation }) {
   const onSubmit = async () => {
     setLoading(true)
     try {
-      await dispatch(login(form))
+      await useAuthStore.getState().login(form)
       Toast.show('Successfully logged in')
       navigation.navigate('Main')
     } catch (e) {
+      if (! e.response) {
+        throw e
+      }
       if (e.response && e.response.data && e.response.data.errors) {
         setErrors({ ...initialErrors, ...e.response.data.errors })
       } else {
@@ -34,7 +38,6 @@ export default function ({ dispatch, navigation }) {
 
   return (
     <View style={styles.scene}>
-      <Text>Test</Text>
       <Panel>
         <TextInput
           label="Email"
@@ -55,6 +58,7 @@ export default function ({ dispatch, navigation }) {
           autoCompleteType="password"
           secureTextEntry={true}
           mode="outlined"
+          style={{marginTop: 20}}
         />
         {errors.password[0] && (
           <HelperText type="error">{errors.password[0]}</HelperText>
@@ -62,7 +66,7 @@ export default function ({ dispatch, navigation }) {
         <View style={{ paddingTop: 20 }} />
         <Button
           mode="contained"
-          icon="user"
+          icon={() => <User weight={'bold'} size={18} color={'white'} />}
           onPress={onSubmit}
           loading={loading}>
           Login

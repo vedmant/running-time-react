@@ -1,60 +1,41 @@
 import axios from 'axios'
-import React, { useState, useEffect } from 'react'
-import { Platform, StatusBar, StyleSheet, View, Text, AppState } from 'react-native'
-import { Provider } from 'react-redux'
+import React from 'react'
+import { Platform, StatusBar, StyleSheet, View } from 'react-native'
 import Colors from './constants/Colors'
 import AppNavigator from './navigation/AppNavigator'
 import { Provider as PaperProvider } from 'react-native-paper'
-import AwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import Theme from './constants/Theme'
 // import Push from 'appcenter-push'
-import RNBootSplash from 'react-native-bootsplash'
 
-let configureStore
-if (__DEV__) {
-  configureStore = require('./store/configureStoreDev').default
-} else {
-  configureStore = require('./store/configureStore').default
-}
+// let configureStore
+// if (__DEV__) {
+//   configureStore = require('./store/configureStoreDev').default
+// } else {
+//   configureStore = require('./store/configureStore').default
+// }
 
 export default function App (props) {
-  const [store, setStore] = useState(null)
-  const [storeReady, setStoreReady] = useState(false)
-  const [addedToken, setAddedToken] = useState(false)
-  if (!store) {
-    setStore(configureStore(() => setStoreReady(true)))
-  }
+  // const [store, setStore] = useState(null)
+  // const [storeReady, setStoreReady] = useState(false)
+  // const [addedToken, setAddedToken] = useState(false)
+  // if (!store) {
+  //   setStore(configureStore(() => setStoreReady(true)))
+  // }
 
-  if (storeReady && !addedToken) {
-    addAxiosToken(store) && setAddedToken(true)
-  }
+  // if (storeReady && !addedToken) {
+  //   addAxiosToken(store) && setAddedToken(true)
+  // }
 
-  useEffect(() => {
-    RNBootSplash.hide({ duration: 250 })
-  }, [])
-
-  if (!storeReady) {
-    return (
-      <View>
-        <Text>Loading...</Text>
+  return (
+    <PaperProvider
+      theme={Theme}
+      settings={{}}>
+      <View style={styles.container}>
+        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+        <AppNavigator />
       </View>
-    )
-  } else {
-    return (
-      <Provider store={store}>
-        <PaperProvider
-          theme={Theme}
-          settings={{
-            icon: prps => <AwesomeIcon {...prps} />,
-          }}>
-          <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            <AppNavigator />
-          </View>
-        </PaperProvider>
-      </Provider>
-    )
-  }
+    </PaperProvider>
+  )
 }
 
 function addAxiosToken (store) {

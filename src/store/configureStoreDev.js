@@ -1,10 +1,10 @@
-import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import devTools from 'remote-redux-devtools'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { persistStore, persistReducer } from 'redux-persist'
 import reducer from '../reducers'
-import Reactotron from '../ReactotronConfig'
+// import Reactotron from '../ReactotronConfig'
 import { createLogger } from 'redux-logger'
 
 const persistConfig = {
@@ -26,7 +26,7 @@ export default function configureStore (onCompletion) {
       port: 8000,
       suppressConnectErrors: false,
     }),
-    Reactotron.createEnhancer(),
+    // Reactotron.createEnhancer(),
   )
 
   const store = createStore(persistedReducer, enhancer)

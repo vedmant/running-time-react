@@ -1,53 +1,33 @@
 import React from 'react'
-import { View, StyleSheet, Dimensions } from 'react-native'
-import { TabView, TabBar } from 'react-native-tab-view'
-import { connect } from 'react-redux'
+import { StyleSheet, useWindowDimensions } from 'react-native'
 import LoginTab from './LoginTab'
 import RegisterTab from './RegisterTab'
 import Colors from '../../constants/Colors'
+import { TabView, SceneMap } from 'react-native-tab-view'
 
-class AuthScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Running Time',
-  }
+const renderScene = SceneMap({
+  login: LoginTab,
+  register: RegisterTab,
+})
 
-  state = {
-    index: 0,
-    routes: [
-      { key: 'login', title: 'Login' },
-      { key: 'register', title: 'Regiter' },
-    ],
-  }
+export default function TabViewExample () {
+  const layout = useWindowDimensions()
 
-  render () {
-    return (
-      <View style={styles.container}>
-        <TabView
-          navigationState={this.state}
-          renderTabBar={props => (
-            <TabBar {...props} style={{ backgroundColor: '#666' }} />
-          )}
-          renderScene={({ route }) => {
-            switch (route.key) {
-              case 'login':
-                return <LoginTab {...this.props} />
-              case 'register':
-                return <RegisterTab {...this.props} />
-              default:
-                return null
-            }
-          }}
-          onIndexChange={index => this.setState({ index })}
-          initialLayout={{ width: Dimensions.get('window').width }}
-        />
-      </View>
-    )
-  }
+  const [index, setIndex] = React.useState(0)
+  const [routes] = React.useState([
+    { key: 'login', title: 'Login' },
+    { key: 'register', title: 'Register' },
+  ])
+
+  return (
+    <TabView
+      navigationState={{ index, routes }}
+      renderScene={renderScene}
+      onIndexChange={setIndex}
+      initialLayout={{ width: layout.width }}
+    />
+  )
 }
-
-export default connect(state => ({
-  // loading: state.general.loading,
-}))(AuthScreen)
 
 const styles = StyleSheet.create({
   container: {

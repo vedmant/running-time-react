@@ -7,8 +7,8 @@
     }
   },
   "include": [
-    "./src/**/*",
-    "./src/@types/**/*",
+    "./src1/**/*",
+    "./src1/@types/**/*",
     "index.d.ts",
     ".eslintrc.js",
     "jest.setup.js",
