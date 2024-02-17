@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Toast from 'react-native-root-toast'
-import { register } from '../../actions/auth'
 import Panel from '../../components/Panel'
 import Colors from '../../constants/Colors'
 import { TextInput, Button, HelperText } from 'react-native-paper'
 import { User } from 'phosphor-react-native'
+import { useAuthStore } from '@/stores/auth'
 
 const initialErrors = {
   name: [],
@@ -32,7 +32,7 @@ export default function ({ dispatch, navigation }) {
   const onSubmit = async () => {
     setLoading(true)
     try {
-      await dispatch(register(form))
+      await useAuthStore.getState().register(form)
       Toast.show('Successfully registered')
       navigation.navigate('Main')
     } catch (e) {

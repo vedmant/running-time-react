@@ -12,9 +12,9 @@ const Stack = createStackNavigator()
 
 function EntriesStack () {
   return (<Stack.Navigator>
-    <Stack.Screen name="Entries" component={EntriesScreen} />
-    <Stack.Screen name="EditEntry" component={EditEntryScreen} />
-    <Stack.Screen name="AddEntry" component={AddEntryScreen} />
+    <Stack.Screen name="ListEntries" component={EntriesScreen} options={{ title: 'Entries List' }} />
+    <Stack.Screen name="EditEntry" component={EditEntryScreen} options={{ title: 'Edit Entry' }}  />
+    <Stack.Screen name="AddEntry" component={AddEntryScreen} options={{ title: 'Add Entry' }}  />
   </Stack.Navigator>)
 }
 
@@ -36,7 +36,7 @@ function MyTabs () {
         ),
       }} />
       <Tab.Screen name="Profile" component={ProfileScreen} options={{
-        tabBarLabel: 'Entries',
+        tabBarLabel: 'Profile',
         tabBarIcon: ({ color }) => (
           <User name="home" color={color} size={26} />
         ),

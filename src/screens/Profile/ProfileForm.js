@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
 import Toast from 'react-native-root-toast'
-import { updateProfile } from '../../actions/auth'
 import Panel from '../../components/Panel'
 import { TextInput, Button, HelperText } from 'react-native-paper'
+import { User } from 'phosphor-react-native'
+import { useAuthStore } from '@/stores/auth'
 
 const initialErrors = {
   name: [],
@@ -12,7 +13,7 @@ const initialErrors = {
   password_confirmation: [],
 }
 
-export default function ({ dispatch, navigation, me }) {
+export default function ({ navigation, me }) {
   const initialValues = {
     name: me.name,
     email: me.email,
@@ -29,7 +30,7 @@ export default function ({ dispatch, navigation, me }) {
   const onSubmit = async () => {
     setLoading(true)
     try {
-      await dispatch(updateProfile({ id: me.id, form }))
+      await useAuthStore.getState().updateProfile({ id: me.id, form })
       Toast.show('Successfully updated profile')
       navigation.navigate('Main')
     } catch (e) {
@@ -49,7 +50,7 @@ export default function ({ dispatch, navigation, me }) {
         label="Name"
         onChangeText={val => updateForm({ name: val })}
         value={form.name}
-        error={!!errors.name[0]}
+        error={!! errors.name[0]}
         mode="outlined"
       />
       {errors.name[0] && <HelperText type="error">{errors.name[0]}</HelperText>}
@@ -57,7 +58,7 @@ export default function ({ dispatch, navigation, me }) {
         label="Email"
         onChangeText={val => updateForm({ email: val })}
         value={form.email}
-        error={!!errors.email[0]}
+        error={!! errors.email[0]}
         autoCompleteType="email"
         mode="outlined"
       />
@@ -68,7 +69,7 @@ export default function ({ dispatch, navigation, me }) {
         label="Password"
         onChangeText={val => updateForm({ password: val })}
         value={form.password}
-        error={!!errors.password[0]}
+        error={!! errors.password[0]}
         autoCompleteType="password"
         mode="outlined"
         secureTextEntry={true}
@@ -80,7 +81,7 @@ export default function ({ dispatch, navigation, me }) {
         label="Password confirmation"
         onChangeText={val => updateForm({ password_confirmation: val })}
         value={form.password_confirmation}
-        error={!!errors.password_confirmation[0]}
+        error={!! errors.password_confirmation[0]}
         autoCompleteType="password"
         mode="outlined"
         secureTextEntry={true}
@@ -89,7 +90,10 @@ export default function ({ dispatch, navigation, me }) {
         <HelperText type="error">{errors.password_confirmation[0]}</HelperText>
       )}
       <View style={{ paddingTop: 20 }} />
-      <Button mode="contained" icon="user" onPress={onSubmit} loading={loading}>
+      <Button
+        mode="contained"
+        icon={() => <User weight={'bold'} size={18} color={'white'} />}
+        onPress={onSubmit} loading={loading}>
         Update
       </Button>
     </Panel>

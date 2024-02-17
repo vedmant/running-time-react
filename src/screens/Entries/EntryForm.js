@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { View } from 'react-native'
-import { storeEntry, loadEntries, updateEntry } from '../../actions/entries'
 import Toast from 'react-native-root-toast'
 import DateTimePicker from 'react-native-modal-datetime-picker'
 import dayjs from 'dayjs'
 import { TextInput, Button, HelperText } from 'react-native-paper'
+import { useEntriesStore } from '@/stores/entries'
 
 const initialErrors = { date: [], distance: [], time: [] }
 const initialValues = {
@@ -13,7 +13,7 @@ const initialValues = {
   time: '',
 }
 
-export default function ({ dispatch, onSuccess, item }) {
+export default function ({ onSuccess, item }) {
   const [form, setForm] = useState({ ...initialValues })
   const [errors, setErrors] = useState(initialErrors)
   const [loading, setLoading] = useState(false)
@@ -36,16 +36,16 @@ export default function ({ dispatch, onSuccess, item }) {
     setLoading(true)
     try {
       if (item) {
-        await dispatch(updateEntry({ id: item.id, form }))
+        await useEntriesStore.getState().updateEntry({ id: item.id, form })
       } else {
-        await dispatch(storeEntry(form))
+        await useEntriesStore.getState().storeEntry(form)
       }
       setErrors(initialErrors)
       if (!item) {
         setForm({ ...initialValues })
       }
       Toast.show(`Successfully ${item ? 'updated' : 'added new'} record`)
-      dispatch(loadEntries())
+      useEntriesStore.getState().loadEntries()
       if (onSuccess) {
         onSuccess()
       }

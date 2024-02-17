@@ -1,61 +1,52 @@
 import dayjs from 'dayjs'
-import React, { Component } from 'react'
+import { useEffect, useState } from 'react'
 import { Alert, FlatList, RefreshControl, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
-import { connect } from 'react-redux'
-import { deleteEntry, loadEntries, loadMoreEntries } from '../../actions/entries'
-import Panel from '../../components/Panel'
-import SmallButton from '../../components/SmallButton'
-import Colors from '../../constants/Colors'
+import Panel from '@/components/Panel'
+import SmallButton from '@/components/SmallButton'
+import Colors from '@/constants/Colors'
 import { FAB } from 'react-native-paper'
-import { Plus } from 'phosphor-react-native'
+import { Pencil, Plus, Trash } from 'phosphor-react-native'
+import { useEntriesStore } from '@/stores/entries'
+import { useNavigation } from '@react-navigation/native'
 
-class Entries extends Component {
-  static navigationOptions = {
-    title: 'Entries',
+export default function () {
+  const navigation = useNavigation()
+  const entries = useEntriesStore(s => s.entries)
+  const [loading, setLoading] = useState(false)
+  const [loadingMore, setLoadingMore] = useState(false)
+
+  async function loadEntries (action) {
+    setLoading(true)
+    await useEntriesStore.getState().loadEntries()
+    setLoading(false)
   }
 
-  state = {
-    loading: false,
-    loadingMore: false,
-  }
-
-  componentDidMount () {
-    this.dispatchWithLoading(loadEntries())
-  }
-
-  async dispatchWithLoading (action) {
-    this.setState({ loading: true })
-    await this.props.dispatch(action)
-    this.setState({ loading: false })
-  }
-
-  async loadMore () {
-    if (
-      !this.state.loadingMore &&
-      this.props.entries.current_page < this.props.entries.last_page
-    ) {
-      this.setState({ loadingMore: true })
-      await this.props.dispatch(
-        loadMoreEntries({ page: this.props.entries.current_page + 1 }),
-      )
-      this.setState({ loadingMore: false })
+  async function loadMore () {
+    if (!loadingMore && entries.current_page < entries.last_page) {
+      setLoadingMore(true)
+      await useEntriesStore.getState().loadMoreEntries({ page: entries.current_page + 1 })
+      setLoadingMore(false)
     }
   }
 
-  async onDeleteItem (item) {
+  useEffect(() => {
+    loadEntries()
+  }, [])
+
+  async function onDeleteItem (item) {
     Alert.alert('Delete', 'Are you sure you want to delete this item?', [
       { text: 'Cancel', style: 'cancel' },
       {
         text: 'OK',
         onPress: async () => {
-          await this.dispatchWithLoading(deleteEntry(item.id))
-          this.dispatchWithLoading(loadEntries())
+          await useEntriesStore.getState().deleteEntry(item.id)
+          loadEntries()
         },
       },
     ])
   }
 
-  renderItem (item) {
+  function renderItem (item) {
     return (
       <Panel style={styles.item}>
         <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -76,15 +67,15 @@ class Entries extends Component {
             <View
               style={styles.actionButtons}>
               <SmallButton
-                icon="pencil"
+                icon={() => <Pencil weight={'bold'} size={18} color={'white'} />}
                 onPress={() =>
-                  this.props.navigation.navigate('EditEntry', { item })
+                  navigation.navigate('EditEntry', { item })
                 }
                 style={{ marginRight: 5 }}
               />
               <SmallButton
-                icon="trash"
-                onPress={() => this.onDeleteItem(item)}
+                icon={() => <Trash weight={'bold'} size={18} color={'white'} />}
+                onPress={() => onDeleteItem(item)}
                 type="danger"
               />
             </View>
@@ -94,8 +85,8 @@ class Entries extends Component {
     )
   }
 
-  renderFooter = () => {
-    if (!this.state.loadingMore) {
+  function renderFooter () {
+    if (!loadingMore) {
       return null
     }
 
@@ -107,45 +98,43 @@ class Entries extends Component {
     )
   }
 
-  render () {
-    return (
-      <View style={{ flex: 1 }}>
-        <FlatList
-          data={this.props.entries.data}
-          style={{ backgroundColor: Colors.pageBackground }}
-          contentContainerStyle={styles.container}
-          renderItem={({ item }) => this.renderItem(item)}
-          keyExtractor={item => item.id + ''}
-          refreshControl={
-            <RefreshControl
-              onRefresh={() => this.dispatchWithLoading(loadEntries())}
-              refreshing={this.state.loading}
-            />
-          }
-          onEndReached={() => this.loadMore()}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={this.renderFooter}
-          ListEmptyComponent={
-            this.state.loading ? null : (
-              <View style={{ alignItems: 'center' }}>
-                <Text>The list is empty</Text>
-              </View>
-            )
-          }
-        />
-        <FAB
-          style={styles.addButton}
-          icon={({ color }) => (
-            <Plus
-              size={20}
-              style={{ color, paddingLeft: 4, paddingTop: 2 }}
-            />
-          )}
-          onPress={() => this.props.navigation.navigate('AddEntry')}
-        />
-      </View>
-    )
-  }
+  return (
+    <View style={{ flex: 1 }}>
+      <FlatList
+        data={entries.data}
+        style={{ backgroundColor: Colors.pageBackground }}
+        contentContainerStyle={styles.container}
+        renderItem={({ item }) => renderItem(item)}
+        keyExtractor={item => item.id + ''}
+        refreshControl={
+          <RefreshControl
+            onRefresh={() => loadEntries()}
+            refreshing={loading}
+          />
+        }
+        onEndReached={() => loadMore()}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={renderFooter}
+        ListEmptyComponent={
+          loading ? null : (
+            <View style={{ alignItems: 'center' }}>
+              <Text>The list is empty</Text>
+            </View>
+          )
+        }
+      />
+      <FAB
+        style={styles.addButton}
+        icon={({ color }) => (
+          <Plus
+            size={24}
+            style={{ color, paddingLeft: 4, paddingTop: 2 }}
+          />
+        )}
+        onPress={() => navigation.navigate('AddEntry')}
+      />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -176,8 +165,3 @@ const styles = StyleSheet.create({
   item: {},
   distance: {},
 })
-
-export default connect(state => ({
-  loading: state.general.loading,
-  entries: state.entries.entries,
-}))(Entries)

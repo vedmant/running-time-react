@@ -1,13 +1,12 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { logout } from '../../actions/auth'
-import { connect } from 'react-redux'
 import ProfileForm from './ProfileForm'
 import Colors from '../../constants/Colors'
 import { Button } from 'react-native-paper'
+import { useAuthStore } from '@/stores/auth'
 
-function ProfileScreen (props) {
+export default function ProfileScreen (props) {
   return (
     <KeyboardAwareScrollView style={styles.container} enableOnAndroid>
       <Button
@@ -15,7 +14,7 @@ function ProfileScreen (props) {
         style={{ marginBottom: 20 }}
         icon="sign-out"
         onPress={() => {
-          props.dispatch(logout())
+          useAuthStore.getState().logout()
           props.navigation.navigate('Auth')
         }}>
         Logout
@@ -29,10 +28,6 @@ function ProfileScreen (props) {
   )
 }
 
-ProfileScreen.navigationOptions = {
-  title: 'Profile',
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -40,7 +35,3 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.pageBackground,
   },
 })
-
-export default connect(state => ({
-  me: state.auth.me,
-}))(ProfileScreen)

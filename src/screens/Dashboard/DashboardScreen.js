@@ -2,27 +2,27 @@ import React, { useEffect, useState } from 'react'
 import { Dimensions, RefreshControl, StyleSheet, Text, View } from 'react-native'
 import { LineChart } from 'react-native-chart-kit'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { connect } from 'react-redux'
-import { loadDashboard } from '../../actions/general'
-import Panel from '../../components/Panel'
-import Colors from '../../constants/Colors'
+import Panel from '@/components/Panel'
+import Colors from '@/constants/Colors'
 import EntryForm from '../Entries/EntryForm'
+import { useGeneralStore } from '@/stores/general'
 
-function DashboardScreen ({ dispatch, dashboard }) {
+function DashboardScreen () {
   const [loading, setLoading] = useState(false)
-  const dashboardLoaded = Object.keys(dashboard).length !== 0
+  const dashboard = useGeneralStore(s => s.dashboard)
+  const loadDashboard = useGeneralStore(s => s.loadDashboard)
 
   const dispatchLoadDashboard = async () => {
     setLoading(true)
-    await dispatch(loadDashboard())
+    await loadDashboard()
     setLoading(false)
   }
 
   useEffect(() => {
-    if (!dashboardLoaded) {
+    if (!dashboard) {
       dispatchLoadDashboard()
     }
-  }, [dashboardLoaded, dispatchLoadDashboard])
+  }, [])
 
   const onRefresh = () => {
     dispatchLoadDashboard()
@@ -70,7 +70,7 @@ function DashboardScreen ({ dispatch, dashboard }) {
           <Text style={styles.value}>{dashboard.max_time || 0}</Text>
         </Text>
       </Panel>
-      {dashboardLoaded && dashboard.week_chart.length ? (
+      {dashboard?.week_chart?.length ? (
         <Panel header="My Performance" bodyStyle={{ padding: 0 }}>
           <LineChart
             data={{
@@ -135,7 +135,7 @@ function DashboardScreen ({ dispatch, dashboard }) {
         </Panel>
       ) : null}
       <Panel header="Add new Time Record">
-        <EntryForm dispatch={dispatch} />
+        <EntryForm />
       </Panel>
     </KeyboardAwareScrollView>
   )
@@ -167,7 +167,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect(state => ({
-  loading: state.general.loading,
-  dashboard: state.general.dashboard,
-}))(DashboardScreen)
+export default DashboardScreen

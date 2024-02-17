@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { connect } from 'react-redux'
 import Panel from '../../components/Panel'
 import Colors from '../../constants/Colors'
 import EntryForm from './EntryForm'
@@ -27,4 +26,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect()(AddEntryScreen)
+export default AddEntryScreen
