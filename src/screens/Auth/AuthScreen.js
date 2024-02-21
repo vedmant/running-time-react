@@ -1,8 +1,7 @@
 import React from 'react'
-import { StyleSheet, useWindowDimensions } from 'react-native'
+import { useWindowDimensions } from 'react-native'
 import LoginTab from './LoginTab'
 import RegisterTab from './RegisterTab'
-import Colors from '../../constants/Colors'
 import { TabView, SceneMap } from 'react-native-tab-view'
 
 const renderScene = SceneMap({
@@ -10,7 +9,7 @@ const renderScene = SceneMap({
   register: RegisterTab,
 })
 
-export default function TabViewExample () {
+export default function () {
   const layout = useWindowDimensions()
 
   const [index, setIndex] = React.useState(0)
@@ -28,11 +27,3 @@ export default function TabViewExample () {
     />
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // paddingTop: StatusBar.currentHeight,
-    backgroundColor: Colors.pageBackground,
-  },
-})

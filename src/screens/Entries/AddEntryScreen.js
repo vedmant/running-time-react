@@ -1,21 +1,19 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import Panel from '../../components/Panel'
-import Colors from '../../constants/Colors'
+import Panel from '@/components/Panel'
+import Colors from '@/constants/Colors'
 import EntryForm from './EntryForm'
+import { useNavigation } from '@react-navigation/native'
 
-function AddEntryScreen ({ dispatch, navigation }) {
+export default function () {
+  const navigation = useNavigation()
   return (
     <View style={styles.container}>
       <Panel>
-        <EntryForm dispatch={dispatch} onSuccess={() => navigation.goBack()} />
+        <EntryForm onSuccess={() => navigation.goBack()} />
       </Panel>
     </View>
   )
-}
-
-AddEntryScreen.navigationOptions = {
-  title: 'Add Entry',
 }
 
 const styles = StyleSheet.create({
@@ -25,5 +23,3 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.pageBackground,
   },
 })
-
-export default AddEntryScreen

@@ -19,18 +19,18 @@ export default function ({ onSuccess, item }) {
   const [loading, setLoading] = useState(false)
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false)
+  const [booted, setBooted] = useState(false)
 
   const updateForm = data => setForm({ ...form, ...data })
 
-  useEffect(() => {
-    if (item) {
-      setForm({
-        date: dayjs(item.date).format('MM/DD/YYYY'),
-        distance: item.distance,
-        time: item.time.split(':').map(s => s.padStart(2, '0')).join(':'),
-      })
-    }
-  }, [item])
+  if (item && !booted) {
+    setForm({
+      date: dayjs(item.date).format('MM/DD/YYYY'),
+      distance: item.distance,
+      time: item.time.split(':').map(s => s.padStart(2, '0')).join(':'),
+    })
+    setBooted(true)
+  }
 
   const onSubmit = async () => {
     setLoading(true)
@@ -79,6 +79,7 @@ export default function ({ onSuccess, item }) {
         error={!!errors.distance[0]}
         mode="outlined"
         keyboardType="number-pad"
+        style={{marginTop: 10}}
       />
       {errors.distance[0] && (
         <HelperText type="error">{errors.distance[0]}</HelperText>
@@ -90,6 +91,7 @@ export default function ({ onSuccess, item }) {
         error={!!errors.time[0]}
         mode="outlined"
         onFocus={() => setTimePickerVisibility(true)}
+        style={{marginTop: 10}}
       />
       {errors.time[0] && <HelperText type="error">{errors.time[0]}</HelperText>}
       <DateTimePicker
@@ -101,6 +103,7 @@ export default function ({ onSuccess, item }) {
           setDatePickerVisibility(false)
         }}
         onCancel={() => setDatePickerVisibility(false)}
+        style={{marginTop: 10}}
       />
       <DateTimePicker
         isVisible={isTimePickerVisible}
@@ -111,6 +114,7 @@ export default function ({ onSuccess, item }) {
           setTimePickerVisibility(false)
         }}
         onCancel={() => setTimePickerVisibility(false)}
+        style={{marginTop: 10}}
       />
       <View style={{ paddingTop: 20 }} />
       <Button mode="contained" onPress={onSubmit} loading={loading}>

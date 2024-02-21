@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-export default function Panel ({ header, children, bodyStyle = {} }) {
+export default function ({ header, children, bodyStyle = {} }) {
   return (
     <View style={styles.container}>
       {header && (

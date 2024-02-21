@@ -5,13 +5,11 @@ import Panel from '@/components/Panel'
 import { TextInput, Button, HelperText } from 'react-native-paper'
 import { User } from 'phosphor-react-native'
 import { useAuthStore } from '@/stores/auth'
-import { useNavigation } from '@react-navigation/native'
 
 const initialErrors = { email: [], password: [] }
 const initialValues = { email: 'admin@gmail.com', password: '123456' }
 
 export default function () {
-  const navigation = useNavigation()
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({ ...initialValues })
   const [errors, setErrors] = useState(initialErrors)
@@ -23,7 +21,6 @@ export default function () {
     try {
       await useAuthStore.getState().login(form)
       Toast.show('Successfully logged in')
-      // navigation.navigate('Main')
     } catch (e) {
       if (! e.response) {
         throw e

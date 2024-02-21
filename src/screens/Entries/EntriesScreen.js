@@ -15,7 +15,7 @@ export default function () {
   const [loading, setLoading] = useState(false)
   const [loadingMore, setLoadingMore] = useState(false)
 
-  async function loadEntries (action) {
+  async function loadEntries () {
     setLoading(true)
     await useEntriesStore.getState().loadEntries()
     setLoading(false)
@@ -64,21 +64,17 @@ export default function () {
             <Text style={styles.distance}>
               Avg. Pace: {Math.round(item.pace * 10) / 10}
             </Text>
-            <View
-              style={styles.actionButtons}>
-              <SmallButton
-                icon={() => <Pencil weight={'bold'} size={18} color={'white'} />}
-                onPress={() =>
-                  navigation.navigate('EditEntry', { item })
-                }
-                style={{ marginRight: 5 }}
-              />
-              <SmallButton
-                icon={() => <Trash weight={'bold'} size={18} color={'white'} />}
-                onPress={() => onDeleteItem(item)}
-                type="danger"
-              />
-            </View>
+          </View>
+          <View
+            style={styles.actionButtons}>
+            <SmallButton
+              onPress={() => navigation.navigate('EditEntry', { item })}
+            >
+              <Pencil size={14} color={'white'} />
+            </SmallButton>
+            <SmallButton onPress={() => onDeleteItem(item)} type="danger">
+              <Trash size={14} color={'white'} />
+            </SmallButton>
           </View>
         </View>
       </Panel>
@@ -128,7 +124,8 @@ export default function () {
         icon={({ color }) => (
           <Plus
             size={24}
-            style={{ color, paddingLeft: 4, paddingTop: 2 }}
+            weight={'bold'}
+            style={{ color: '#fff', paddingLeft: 4, paddingTop: 2 }}
           />
         )}
         onPress={() => navigation.navigate('AddEntry')}
@@ -152,9 +149,10 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   actionButtons: {
-    flex: 1,
     alignItems: 'flex-start',
-    flexDirection: 'row',
+    justifyContent: 'flex-center',
+    flexDirection: 'col',
+    gap: 5,
   },
   loadingView: {
     flex: 1,

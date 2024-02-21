@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, RefreshControl, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, RefreshControl, StyleSheet, Text, View, ScrollView } from 'react-native'
 import { LineChart } from 'react-native-chart-kit'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Panel from '@/components/Panel'
 import Colors from '@/constants/Colors'
 import EntryForm from '../Entries/EntryForm'
 import { useGeneralStore } from '@/stores/general'
 
-function DashboardScreen () {
+export default function () {
   const [loading, setLoading] = useState(false)
+  const [booted, setBooted] = useState(false)
   const dashboard = useGeneralStore(s => s.dashboard)
   const loadDashboard = useGeneralStore(s => s.loadDashboard)
 
@@ -18,19 +18,17 @@ function DashboardScreen () {
     setLoading(false)
   }
 
-  useEffect(() => {
-    if (!dashboard) {
-      dispatchLoadDashboard()
-    }
-  }, [])
+  if (!booted) {
+    dispatchLoadDashboard()
+    setBooted(true)
+  }
 
   const onRefresh = () => {
     dispatchLoadDashboard()
   }
 
   return (
-    <KeyboardAwareScrollView
-      enableOnAndroid
+    <ScrollView
       style={{ backgroundColor: Colors.pageBackground }}
       contentContainerStyle={styles.container}
       refreshControl={
@@ -137,12 +135,8 @@ function DashboardScreen () {
       <Panel header="Add new Time Record">
         <EntryForm />
       </Panel>
-    </KeyboardAwareScrollView>
+    </ScrollView>
   )
-}
-
-DashboardScreen.navigationOptions = {
-  title: 'Dashboard',
 }
 
 const styles = StyleSheet.create({
@@ -166,5 +160,3 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
 })
-
-export default DashboardScreen

@@ -1,15 +1,20 @@
 import React, { useEffect } from 'react'
 import { View, StyleSheet, ActivityIndicator } from 'react-native'
-import Colors from '../../constants/Colors'
+import Colors from '@/constants/Colors'
 import { useAuthStore } from '@/stores/auth'
+import { useNavigation } from '@react-navigation/native'
 
-export default function AuthLoadingScreen ({ navigation }) {
+export default function () {
+  const navigation = useNavigation()
+
   useEffect(() => {
+    console.log('AuthLoadingScreen');
+
     (async () => {
-      try {
-        await useAuthStore.getState().checkLogin()
-        navigation.navigate('Main')
-      } catch (e) {
+      useAuthStore.getState().setAxios()
+
+      if (! (await useAuthStore.getState().checkLogin())) {
+        console.log('no user')
         navigation.navigate('Auth')
       }
     })()

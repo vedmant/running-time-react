@@ -1,30 +1,31 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { ScrollView, StyleSheet } from 'react-native'
 import ProfileForm from './ProfileForm'
-import Colors from '../../constants/Colors'
+import Colors from '@/constants/Colors'
 import { Button } from 'react-native-paper'
 import { useAuthStore } from '@/stores/auth'
+import { useNavigation } from '@react-navigation/native'
+import { SignOut } from 'phosphor-react-native'
 
-export default function ProfileScreen (props) {
+export default function () {
+  const navigation = useNavigation()
+
   return (
-    <KeyboardAwareScrollView style={styles.container} enableOnAndroid>
+    <ScrollView style={styles.container}>
       <Button
         mode="contained"
         style={{ marginBottom: 20 }}
-        icon="sign-out"
+        icon={() => <SignOut weight={'bold'} size={18} color={'white'} />}
         onPress={() => {
           useAuthStore.getState().logout()
-          props.navigation.navigate('Auth')
         }}>
         Logout
       </Button>
       <ProfileForm
-        {...props}
         message="Successfully updated profile"
         button="Update"
       />
-    </KeyboardAwareScrollView>
+    </ScrollView>
   )
 }
 

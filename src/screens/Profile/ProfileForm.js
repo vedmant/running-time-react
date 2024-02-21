@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
 import Toast from 'react-native-root-toast'
-import Panel from '../../components/Panel'
+import Panel from '@/components/Panel'
 import { TextInput, Button, HelperText } from 'react-native-paper'
 import { User } from 'phosphor-react-native'
 import { useAuthStore } from '@/stores/auth'
+import { useNavigation } from '@react-navigation/native'
 
 const initialErrors = {
   name: [],
@@ -13,7 +14,10 @@ const initialErrors = {
   password_confirmation: [],
 }
 
-export default function ({ navigation, me }) {
+export default function () {
+  const navigation = useNavigation()
+  const me = useAuthStore.getState().me
+
   const initialValues = {
     name: me.name,
     email: me.email,
@@ -61,6 +65,7 @@ export default function ({ navigation, me }) {
         error={!! errors.email[0]}
         autoCompleteType="email"
         mode="outlined"
+        style={{marginTop: 10}}
       />
       {errors.email[0] && (
         <HelperText type="error">{errors.email[0]}</HelperText>
@@ -73,6 +78,7 @@ export default function ({ navigation, me }) {
         autoCompleteType="password"
         mode="outlined"
         secureTextEntry={true}
+        style={{marginTop: 10}}
       />
       {errors.password[0] && (
         <HelperText type="error">{errors.password[0]}</HelperText>
@@ -85,6 +91,7 @@ export default function ({ navigation, me }) {
         autoCompleteType="password"
         mode="outlined"
         secureTextEntry={true}
+        style={{marginTop: 10}}
       />
       {errors.password_confirmation[0] && (
         <HelperText type="error">{errors.password_confirmation[0]}</HelperText>

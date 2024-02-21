@@ -1,12 +1,7 @@
 import React from 'react'
 import { StyleSheet, TouchableHighlight, View } from 'react-native'
 
-export default function Panel ({
-  type = 'primary',
-  children,
-  style,
-  ...props
-}) {
+export default function Panel ({ type = 'primary', children, style, ...props }) {
   return (
     <TouchableHighlight style={[styles.button, styles[type], style]} {...props}>
       <View>

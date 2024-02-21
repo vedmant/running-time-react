@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import Toast from 'react-native-root-toast'
 import Panel from '../../components/Panel'
 import Colors from '../../constants/Colors'
@@ -22,7 +21,7 @@ const initialValues = {
   password_confirmation: '123456',
 }
 
-export default function ({ dispatch, navigation }) {
+export default function () {
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({ ...initialValues })
   const [errors, setErrors] = useState(initialErrors)
@@ -34,7 +33,6 @@ export default function ({ dispatch, navigation }) {
     try {
       await useAuthStore.getState().register(form)
       Toast.show('Successfully registered')
-      navigation.navigate('Main')
     } catch (e) {
       if (e.response && e.response.data && e.response.data.errors) {
         setErrors({ ...initialErrors, ...e.response.data.errors })
@@ -47,7 +45,7 @@ export default function ({ dispatch, navigation }) {
   }
 
   return (
-    <KeyboardAwareScrollView style={styles.scene} enableOnAndroid>
+    <ScrollView style={styles.scene} enableOnAndroid>
       <Panel>
         <TextInput
           label="Name"
@@ -108,7 +106,7 @@ export default function ({ dispatch, navigation }) {
           Register
         </Button>
       </Panel>
-    </KeyboardAwareScrollView>
+    </ScrollView>
   )
 }
 

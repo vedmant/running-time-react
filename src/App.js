@@ -5,7 +5,7 @@ import AppNavigator from './navigation/AppNavigator'
 import { Provider as PaperProvider } from 'react-native-paper'
 import Theme from './constants/Theme'
 
-export default function App (props) {
+export default function App () {
   return (
     <PaperProvider
       theme={Theme}
