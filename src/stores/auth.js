@@ -7,7 +7,7 @@ import * as config from '../config'
 let tokenInterceptor = null
 
 export function addAxiosToken (token) {
-  if (tokenInterceptor) { axios.interceptors.request.eject(tokenInterceptor) }
+  if (tokenInterceptor !== null) { axios.interceptors.request.eject(tokenInterceptor) }
 
   console.log('addAxiosToken', token)
 
