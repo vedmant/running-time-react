@@ -3,4 +3,4 @@
  *
  * @type {string}
  */
-export const apiPath = 'https://running-time.vedmant.com/api/v1/'
+export const apiPath = 'https://running-time.vedmant.com/api/v1'

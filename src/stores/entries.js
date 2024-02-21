@@ -1,6 +1,5 @@
 import { create } from 'zustand'
-import axios from 'axios'
-import * as config from '../config'
+import useApi from '@/composables/useApi'
 
 export const useEntriesStore = create((set) => ({
   entries: {
@@ -10,12 +9,12 @@ export const useEntriesStore = create((set) => ({
   entry: {},
 
   loadEntries: async (params) => {
-    const res = await axios.get(config.apiPath + 'entry', { params })
+    const res = await useApi('/entry', { query: params })
     set({ entries: res.data.entries })
   },
 
   loadMoreEntries: async (params) => {
-    const res = await axios.get(config.apiPath + 'entry', { params })
+    const res = await useApi('/entry', { query: params })
     const { data, ...rest } = res.data.entries
     set(state => ({
       entries: {
@@ -26,19 +25,19 @@ export const useEntriesStore = create((set) => ({
   },
 
   storeEntry: async (form) => {
-    const res = await axios.post(config.apiPath + 'entry', form)
+    const res = await useApi('/entry', { method: 'POST', body: form })
   },
 
   updateEntry: async ({ id, form }) => {
-    const res = await axios.post(config.apiPath + 'entry/' + id, {
-      _method: 'PUT',
-      ...form,
+    const res = await useApi('/entry/' + id, {
+      method: 'PUT',
+      body: form,
     })
   },
 
   deleteEntry: async (id) => {
-    await axios.post(config.apiPath + 'entry/' + id, {
-      _method: 'DELETE',
+    await useApi('/entry/' + id, {
+      method: 'DELETE',
     })
   },
 }))

@@ -1,13 +1,12 @@
 import { create } from 'zustand'
-import axios from 'axios'
-import * as config from '../config'
+import useApi from '@/composables/useApi'
 
 export const useGeneralStore = create((set) => ({
   loading: true,
   dashboard: {},
 
   loadDashboard: async (params) => {
-    const res = await axios.get(config.apiPath + 'dashboard/data')
+    const res = await useApi('/dashboard/data')
     set({ dashboard: res.data })
   },
 }))

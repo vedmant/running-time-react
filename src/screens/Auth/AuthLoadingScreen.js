@@ -11,8 +11,6 @@ export default function () {
     console.log('AuthLoadingScreen');
 
     (async () => {
-      useAuthStore.getState().setAxios()
-
       if (! (await useAuthStore.getState().checkLogin())) {
         console.log('no user')
         navigation.navigate('Auth')
