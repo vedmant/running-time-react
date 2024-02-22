@@ -7,6 +7,6 @@ export const useGeneralStore = create((set) => ({
 
   loadDashboard: async (params) => {
     const res = await useApi('/dashboard/data')
-    set({ dashboard: res.data })
+    set({ dashboard: res })
   },
 }))

@@ -10,12 +10,12 @@ export const useEntriesStore = create((set) => ({
 
   loadEntries: async (params) => {
     const res = await useApi('/entry', { query: params })
-    set({ entries: res.data.entries })
+    set({ entries: res.entries })
   },
 
   loadMoreEntries: async (params) => {
     const res = await useApi('/entry', { query: params })
-    const { data, ...rest } = res.data.entries
+    const { data, ...rest } = res.entries
     set(state => ({
       entries: {
         data: state.entries.data.concat(data),

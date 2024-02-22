@@ -18,23 +18,27 @@ export default async function (url, options = {}) {
     options.body = JSON.stringify(options.body)
   }
 
-  try {
-    options = merge({
-      headers: {
-        cache: 'no-cache',
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': token ? `Bearer ${token}` : '',
-      },
-    }, options)
-    console.log(config.apiPath + url, options)
-    const resp = await fetch(config.apiPath + url, options)
+  options = merge({
+    headers: {
+      cache: 'no-cache',
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : '',
+    },
+  }, options)
+  console.log(config.apiPath + url, options)
+  const resp = await fetch(config.apiPath + url, options)
 
-    return await resp.json()
-  } catch (e) {
-    if (e?.response?.status === 401) {
-      useAuthStore.getState().logout()
-    }
-    throw e
+  if (resp.status === 401) {
+    useAuthStore.getState().logout()
   }
+
+  if (! resp.ok) {
+    const err = new Error(`${resp.status} ${resp.statusText}`)
+    err.response = resp
+    err.response.data = await resp.json()
+    throw err
+  }
+
+  return await resp.json()
 }

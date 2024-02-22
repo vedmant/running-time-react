@@ -11,9 +11,9 @@ export const useAuthStore = create(persist((set, get) => ({
       console.log('checkLogin')
       try {
         const res = await useApi('/user/me')
-        console.log(res.data)
-        set({ me: res.data })
-        return res.data
+        console.log(res)
+        set({ me: res })
+        return res
       } catch (e) {
         console.log(e)
         get().logout()
@@ -23,7 +23,7 @@ export const useAuthStore = create(persist((set, get) => ({
 
     login: async (form) => {
       const res = await useApi('/auth/login', { method: 'POST', body: form })
-      set({ me: res.data.user, accessToken: res.data.access_token })
+      set({ me: res.user, accessToken: res.access_token })
     },
 
     logout: () => {
@@ -33,12 +33,12 @@ export const useAuthStore = create(persist((set, get) => ({
 
     register: async (form) => {
       const res = await useApi('auth/register', { body: form })
-      set({ me: res.data.user, accessToken: res.data.access_token })
+      set({ me: res.user, accessToken: res.access_token })
     },
 
     updateProfile: async ({ id, form }) => {
       const res = await useApi(`/user/${id}`, { method: 'PUT', body: form })
-      set({ me: res.data.user })
+      set({ me: res.user })
     },
   }),
   {
