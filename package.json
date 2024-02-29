@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test:report": "jest --collectCoverage --coverageDirectory=\"./coverage\" --ci --reporters=default --reporters=jest-junit --coverage",
+    "pod-update": "cd ios && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install && cd ..",
     "pod-install": "cd ios && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install && cd .."
   },
   "dependencies": {
