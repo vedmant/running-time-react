@@ -8,14 +8,11 @@ export const useAuthStore = create(persist((set, get) => ({
     accessToken: null,
 
     checkLogin: async () => {
-      console.log('checkLogin')
       try {
         const res = await useApi('/user/me')
-        console.log(res)
         set({ me: res })
         return res
       } catch (e) {
-        console.log(e)
         get().logout()
         return null
       }
@@ -27,12 +24,11 @@ export const useAuthStore = create(persist((set, get) => ({
     },
 
     logout: () => {
-      console.log('logout')
       set({ me: null, accessToken: null })
     },
 
     register: async (form) => {
-      const res = await useApi('auth/register', { body: form })
+      const res = await useApi('/auth/register', { method: 'POST', body: form })
       set({ me: res.user, accessToken: res.access_token })
     },
 

@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { View } from 'react-native'
 import Toast from 'react-native-root-toast'
 import Panel from '@/components/Panel'
-import { TextInput, Button, HelperText } from 'react-native-paper'
-import { User } from 'phosphor-react-native'
+import { Lock, User } from 'phosphor-react-native'
 import { useAuthStore } from '@/stores/auth'
+import InputGroup from '@/components/InputGroup'
+import Button from '@/components/Button'
 
 const initialErrors = { email: [], password: [] }
 const initialValues = { email: 'admin@gmail.com', password: '123456' }
@@ -31,53 +32,39 @@ export default function () {
         setErrors({ ...initialErrors, email: [e.response.data.message] })
       }
       Toast.show(e.response.data.message)
+    } finally {
       setLoading(false)
     }
   }
 
   return (
-    <View style={styles.scene}>
+    <View className="p-2">
       <Panel>
-        <TextInput
+        <InputGroup
           label="Email"
-          onChangeText={val => updateForm({ email: val })}
+          icon={<User />}
+          onChangeText={v => updateForm({ email: v })}
           value={form.email}
-          error={!!errors.email[0]}
+          error={errors.email?.[0]}
           autoCompleteType="email"
-          mode="outlined"
         />
-        {errors.email[0] && (
-          <HelperText type="error">{errors.email[0]}</HelperText>
-        )}
-        <TextInput
+        <InputGroup
           label="Password"
-          onChangeText={val => updateForm({ password: val })}
+          icon={<Lock />}
+          onChangeText={v => updateForm({ password: v })}
           value={form.password}
-          error={!!errors.password[0]}
+          error={errors.password?.[0]}
           autoCompleteType="password"
           secureTextEntry={true}
-          mode="outlined"
-          style={{marginTop: 20}}
         />
-        {errors.password[0] && (
-          <HelperText type="error">{errors.password[0]}</HelperText>
-        )}
-        <View style={{ paddingTop: 20 }} />
         <Button
-          mode="contained"
-          icon={() => <User weight={'bold'} size={18} color={'white'} />}
+          label="Login"
+          icon={<User />}
           onPress={onSubmit}
-          loading={loading}>
-          Login
-        </Button>
+          loading={loading}
+          className="mt-4"
+        />
       </Panel>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  scene: {
-    flex: 1,
-    padding: 10,
-  },
-})

@@ -1,26 +1,12 @@
 import React from 'react'
-import { Platform, StatusBar, StyleSheet, View } from 'react-native'
-import Colors from './constants/Colors'
+import { Platform, StatusBar, View } from 'react-native'
 import AppNavigator from './navigation/AppNavigator'
-import { Provider as PaperProvider } from 'react-native-paper'
-import Theme from './constants/Theme'
 
 export default function App () {
   return (
-    <PaperProvider
-      theme={Theme}
-      settings={{}}>
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
-      </View>
-    </PaperProvider>
+    <View tw="flex-1">
+      {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+      <AppNavigator />
+    </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.pageBackground,
-  },
-})
