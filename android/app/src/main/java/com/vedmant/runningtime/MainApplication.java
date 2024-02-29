@@ -1,4 +1,4 @@
-package com.runningtimern;
+package com.vedmant.runningtime;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

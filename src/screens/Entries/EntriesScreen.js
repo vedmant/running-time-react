@@ -124,8 +124,9 @@ export default function () {
         icon={({ color }) => (
           <Plus
             size={24}
+            color={'white'}
             weight={'bold'}
-            style={{ color: '#fff', paddingLeft: 4, paddingTop: 2 }}
+            style={{ paddingLeft: 4, paddingTop: 2 }}
           />
         )}
         onPress={() => navigation.navigate('AddEntry')}
