@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Dimensions, RefreshControl, StyleSheet, Text, View, ScrollView } from 'react-native'
 import { LineChart } from 'react-native-chart-kit'
 import Panel from '@/components/Panel'
@@ -31,6 +31,7 @@ export default function () {
     <ScrollView
       style={{ backgroundColor: Colors.pageBackground }}
       contentContainerStyle={styles.container}
+      className="gap-y-2"
       refreshControl={
         <RefreshControl onRefresh={onRefresh} refreshing={loading} />
       }>
@@ -69,7 +70,7 @@ export default function () {
         </Text>
       </Panel>
       {dashboard?.week_chart?.length ? (
-        <Panel header="My Performance" bodyStyle={{ padding: 0 }}>
+        <Panel header="My Performance" bodyStyle={{ padding: 0 }} className="overflow-hidden">
           <LineChart
             data={{
               labels: dashboard.week_chart.map(i => i[0]),

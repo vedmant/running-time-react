@@ -8,7 +8,7 @@ import InputGroup from '@/components/InputGroup'
 import Button from '@/components/Button'
 
 const initialErrors = { email: [], password: [] }
-const initialValues = { email: 'admin@gmail.com', password: '123456' }
+const initialValues = { email: 'user@gmail.com', password: '123456' }
 
 export default function () {
   const [loading, setLoading] = useState(false)

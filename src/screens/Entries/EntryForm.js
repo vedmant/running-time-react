@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { View } from 'react-native'
 import Toast from 'react-native-root-toast'
 import DateTimePicker from 'react-native-modal-datetime-picker'
 import dayjs from 'dayjs'
-import { TextInput, Button, HelperText } from 'react-native-paper'
 import { useEntriesStore } from '@/stores/entries'
+import InputGroup from '@/components/InputGroup'
+import Button from '@/components/Button'
 
 const initialErrors = { date: [], distance: [], time: [] }
 const initialValues = {
@@ -50,7 +51,6 @@ export default function ({ onSuccess, item }) {
         onSuccess()
       }
     } catch (e) {
-      console.log(e)
       if (e.response && e.response.data && e.response.data.errors) {
         setErrors({ ...initialErrors, ...e.response.data.errors })
       } else {
@@ -63,37 +63,30 @@ export default function ({ onSuccess, item }) {
 
   return (
     <View>
-      <TextInput
+      <InputGroup
         label="Date"
         onChangeText={val => updateForm({ date: val })}
         value={form.date}
-        error={!!errors.date[0]}
+        error={errors.date?.[0]}
         mode="outlined"
         onFocus={() => setDatePickerVisibility(true)}
       />
-      {errors.date[0] && <HelperText type="error">{errors.date[0]}</HelperText>}
-      <TextInput
+      <InputGroup
         label="Distance"
         onChangeText={val => updateForm({ distance: val })}
         value={form.distance + ''}
-        error={!!errors.distance[0]}
+        error={errors.distance?.[0]}
         mode="outlined"
         keyboardType="number-pad"
-        style={{marginTop: 10}}
       />
-      {errors.distance[0] && (
-        <HelperText type="error">{errors.distance[0]}</HelperText>
-      )}
-      <TextInput
+      <InputGroup
         label="Time"
         onChangeText={val => updateForm({ time: val })}
         value={form.time}
-        error={!!errors.time[0]}
+        error={errors.time?.[0]}
         mode="outlined"
         onFocus={() => setTimePickerVisibility(true)}
-        style={{marginTop: 10}}
       />
-      {errors.time[0] && <HelperText type="error">{errors.time[0]}</HelperText>}
       <DateTimePicker
         isVisible={isDatePickerVisible}
         mode="date"
@@ -103,7 +96,6 @@ export default function ({ onSuccess, item }) {
           setDatePickerVisibility(false)
         }}
         onCancel={() => setDatePickerVisibility(false)}
-        style={{marginTop: 10}}
       />
       <DateTimePicker
         isVisible={isTimePickerVisible}
@@ -114,12 +106,9 @@ export default function ({ onSuccess, item }) {
           setTimePickerVisibility(false)
         }}
         onCancel={() => setTimePickerVisibility(false)}
-        style={{marginTop: 10}}
       />
       <View style={{ paddingTop: 20 }} />
-      <Button mode="contained" onPress={onSubmit} loading={loading}>
-        Submit
-      </Button>
+      <Button label="Submit" mode="contained" onPress={onSubmit} loading={loading} />
     </View>
   )
 }

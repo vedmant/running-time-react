@@ -4,10 +4,10 @@ import { Alert, FlatList, RefreshControl, StyleSheet, Text, View, ActivityIndica
 import Panel from '@/components/Panel'
 import SmallButton from '@/components/SmallButton'
 import Colors from '@/constants/Colors'
-import { FAB } from 'react-native-paper'
 import { Pencil, Plus, Trash } from 'phosphor-react-native'
 import { useEntriesStore } from '@/stores/entries'
 import { useNavigation } from '@react-navigation/native'
+import Button from '@/components/Button'
 
 export default function () {
   const navigation = useNavigation()
@@ -48,7 +48,7 @@ export default function () {
 
   function renderItem (item) {
     return (
-      <Panel style={styles.item}>
+      <Panel style={styles.item} className="mb-2">
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <View style={{ flex: 1 }}>
             <Text style={styles.distance}>
@@ -104,11 +104,11 @@ export default function () {
         keyExtractor={item => item.id + ''}
         refreshControl={
           <RefreshControl
-            onRefresh={() => loadEntries()}
+            onRefresh={loadEntries}
             refreshing={loading}
           />
         }
-        onEndReached={() => loadMore()}
+        onEndReached={loadMore}
         onEndReachedThreshold={0.5}
         ListFooterComponent={renderFooter}
         ListEmptyComponent={
@@ -119,16 +119,9 @@ export default function () {
           )
         }
       />
-      <FAB
-        style={styles.addButton}
-        icon={({ color }) => (
-          <Plus
-            size={24}
-            color={'white'}
-            weight={'bold'}
-            style={{ paddingLeft: 4, paddingTop: 2 }}
-          />
-        )}
+      <Button
+        className="shadow-lg absolute bottom-0 right-0 m-4"
+        icon={<Plus className="ml-1" size={24} color={'white'} weight={'bold'} />}
         onPress={() => navigation.navigate('AddEntry')}
       />
     </View>
